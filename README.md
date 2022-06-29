@@ -1,7 +1,5 @@
 # Rick And Morty v2
 
-https://buttery-mall-93e.notion.site/3ca5dcaa0202499991f5d566893ac97c?v=934447488ef04c979e93d7bcb36b0925
-
 The purpose of this app is to learn
 [Jetpack Compose](https://developer.android.com/jetpack/compose),
 [Compose Destinations](https://github.com/raamcosta/compose-destinations),
@@ -15,7 +13,7 @@ Some helpful resources for high level clean architecture setup and folder struct
 - [Clean Architecture UI Folder Structure](https://whimsical.com/ui-layer-clean-architecture-folder-structure-QoVXmPKC7Cbod48Hc4agCy)
 
 Please refer
-to [this notion board](https://buttery-mall-93e.notion.site/ece923aa68284a12a53076196b7ebff4?v=f760eeb1522b4588a62737077637fabd)
+to [this notion board](https://buttery-mall-93e.notion.site/3ca5dcaa0202499991f5d566893ac97c?v=934447488ef04c979e93d7bcb36b0925)
 and duplicate the project board for a link to the wireframe and the list of tasks required in order
 to complete the assignment.
 
