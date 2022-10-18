@@ -2,6 +2,7 @@ package com.example.lib_data.data.repository
 
 import com.example.lib_data.data.remote.ApiService
 import com.example.lib_data.domain.models.Data
+import com.example.lib_data.domain.models.Episode
 import com.example.lib_data.domain.repository.Repository
 import com.example.lib_data.util.Resource
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +16,19 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getCharacterList(): Resource<Data> = withContext(Dispatchers.IO) {
         return@withContext try {
             val res = apiInstance.getCharacterList()
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("I AM BROKEN")
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.toString())
+        }
+    }
+
+    override suspend fun getEpisodeById(id: Int): Resource<Episode> = withContext(Dispatchers.IO) {
+        return@withContext try {
+            val res = apiInstance.getEpisodeById()
             if (res.isSuccessful && res.body() != null) {
                 Resource.Success(res.body()!!)
             } else {
