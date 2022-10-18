@@ -18,11 +18,11 @@ data class Character(
     @ColumnInfo
     val image: String,
     @ColumnInfo
-    val location: List<String>,
+    val location: CharLocation,
     @ColumnInfo
     val name: String,
     @ColumnInfo
-    val origin: List<String>,
+    val origin: Origin,
     @ColumnInfo
     val species: String,
     @ColumnInfo
