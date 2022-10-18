@@ -5,4 +5,8 @@ data class Info(
     val next: String,
     val pages: Int,
     val prev: Any
-)
+){
+    override fun toString(): String {
+        return "$count:$next:$pages:$prev"
+    }
+}
