@@ -1,0 +1,3 @@
+package com.rave.rickandmortyv2.presentation.screen.episode_details
+
+class EpisodeDetailsViewModel

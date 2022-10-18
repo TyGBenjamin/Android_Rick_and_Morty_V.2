@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboard">
+
+    <fragment
+        android:id="@+id/dashboard"
+        android:name="com.rave.rickandmortyv2.presentation.screen.dashboard.Dashboard"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboard_to_characterDetails"
+            app:destination="@id/characterDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetails"
+        android:name="com.rave.rickandmortyv2.presentation.screen.character_details.CharacterDetails"
+        android:label="fragment_character_details"
+        tools:layout="@layout/fragment_character_details" >
+        <action
+            android:id="@+id/action_characterDetails_to_dashboard"
+            app:destination="@id/dashboard" />
+        <action
+            android:id="@+id/action_characterDetails_to_locationDetails2"
+            app:destination="@id/locationDetails" />
+        <action
+            android:id="@+id/action_characterDetails_to_characterEpisode2"
+            app:destination="@id/characterEpisode" />
+        <argument
+            android:name="characterId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationDetails"
+        android:name="com.rave.rickandmortyv2.presentation.screen.location_details.LocationDetails"
+        android:label="fragment_location_details"
+        tools:layout="@layout/fragment_location_details" >
+        <action
+            android:id="@+id/action_locationDetails_to_characterDetails"
+            app:destination="@id/characterDetails" />
+        <argument
+            android:name="locationId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterEpisode"
+        android:name="com.rave.rickandmortyv2.presentation.screen.character_episode.CharacterEpisode"
+        android:label="fragment_character_episode"
+        tools:layout="@layout/fragment_character_episode" >
+        <action
+            android:id="@+id/action_characterEpisode_to_episodeDetails"
+            app:destination="@id/episodeDetails" />
+        <action
+            android:id="@+id/action_characterEpisode_to_characterDetails"
+            app:destination="@id/characterDetails" />
+        <argument
+            android:name="characterId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetails"
+        android:name="com.rave.rickandmortyv2.presentation.screen.episode_details.EpisodeDetails"
+        android:label="fragment_episode_details"
+        tools:layout="@layout/fragment_episode_details" >
+        <action
+            android:id="@+id/action_episodeDetails_to_characterDetails"
+            app:destination="@id/characterDetails" />
+        <action
+            android:id="@+id/action_episodeDetails_to_characterEpisode"
+            app:destination="@id/characterEpisode" />
+        <argument
+            android:name="episodeId"
+            app:argType="string" />
+    </fragment>
+</navigation>
