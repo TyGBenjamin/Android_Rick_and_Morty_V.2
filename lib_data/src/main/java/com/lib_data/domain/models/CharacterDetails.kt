@@ -4,33 +4,32 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.alecbrando.musicplayer.data.typeconverters.TypeConvertersHelper
+import com.lib_data.data.local.typeconverters.TypeConvertersHelper
 
-//@Entity(tableName = "characters_database")
-//@TypeConverters(TypeConvertersHelper::class)
+@Entity(tableName = "characters")
 data class CharacterDetails(
-//    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = false)
     val id: Int,
-//    @ColumnInfo
+    @ColumnInfo
     val name: String,
-//    @ColumnInfo
+    @ColumnInfo
     val status: String,
-//    @ColumnInfo
+    @ColumnInfo
     val species : String,
-//    @ColumnInfo
+    @ColumnInfo
     val type: String,
-//    @ColumnInfo
+    @ColumnInfo
     val gender: String,
-//    @ColumnInfo
+    @ColumnInfo
     val origin: Origin,
-//    @ColumnInfo
+    @ColumnInfo
     val location: Location,
-//    @ColumnInfo
+    @ColumnInfo
     val image: String,
-//    @ColumnInfo
-    val episode: Episode,
-//    @ColumnInfo
+    @ColumnInfo
+    val episode: List<String>,
+    @ColumnInfo
     val url: String,
-//    @ColumnInfo
+    @ColumnInfo
     val created: String
 )

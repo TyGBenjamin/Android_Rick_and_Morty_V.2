@@ -2,18 +2,36 @@ package com.rave.rickandmortyv2.presentation.screens.dashboard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.lib_data.domain.models.CharacterWrapper
+import coil.load
+import com.lib_data.domain.models.CharacterDetails
 import com.rave.rickandmortyv2.databinding.DashboardBinding
 
-class DashboardAdapter: RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder>() {
-    private var characterList: MutableList<CharacterWrapper> = mutableListOf()
+class DashboardAdapter(
+    private val navigateToCharacterDetails: (id: Int) -> Unit,
+    private val getFirstSeenIn: (id: Int) -> Unit,
+): PagingDataAdapter<CharacterDetails, DashboardAdapter.DashboardViewHolder>(COMPARATOR) {
 
     inner class DashboardViewHolder(
         private val binding: DashboardBinding
     ) : RecyclerView.ViewHolder(binding.root){
-        fun displayAllCharacters(character: CharacterWrapper){
+        fun displayAllCharacters(character: CharacterDetails) = with(binding){
+            ivImage.load(character.image)
+            tvName.text = character.name
+            val status = "${character.status} -"
+            tvStatus.text = status
+            tvSpecies.text = character.species
+            tvLocation.text = character.location.name
 
+            val id = character.episode[0].substringAfter("n/").toInt()
+            getFirstSeenIn(id)
+//            tvName.text = getItem(adapterPosition)?.name
+
+            root.setOnClickListener{
+                navigateToCharacterDetails(character.id)
+            }
         }
     }
 
@@ -23,13 +41,25 @@ class DashboardAdapter: RecyclerView.Adapter<DashboardAdapter.DashboardViewHolde
     }
 
     override fun onBindViewHolder(holder: DashboardViewHolder, position: Int) {
-        val characters = characterList[position]
-        holder.displayAllCharacters(characters)
+        val characters = getItem(position)
+        characters?.let { character ->
+            holder.displayAllCharacters(character)
+        }
+
     }
 
-    override fun getItemCount(): Int = characterList.size
+    companion object{
+//        val firstSeenIn : String = ""
+        private val COMPARATOR = object : DiffUtil.ItemCallback<CharacterDetails>() {
+            override fun areItemsTheSame(
+                oldItem: CharacterDetails,
+                newItem: CharacterDetails
+            ): Boolean = oldItem.name == newItem.name
 
-    fun addCharacters(characters: MutableList<CharacterWrapper>){
-        characterList = characters
+            override fun areContentsTheSame(
+                oldItem: CharacterDetails,
+                newItem: CharacterDetails
+            ): Boolean = oldItem == newItem
+        }
     }
 }

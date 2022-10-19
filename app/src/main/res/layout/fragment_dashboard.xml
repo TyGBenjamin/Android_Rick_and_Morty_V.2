@@ -1,28 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_action_bar"
+        android:background="@color/design_default_color_primary"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:textSize="20dp"
+            android:text="Rick And Morty V2"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_page_menu"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_action_bar"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <Button
+            android:id="@+id/btn_first_arrow"
+            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_baseline_first_previous_24"
+            />
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btn_previous_arrow"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_baseline_previous_arrow_left_24"
+            />
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Page "
+            />
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/tv_page_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="1"
+            />
+
+        <TextView
+            android:id="@+id/tv_of"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="of"
+            />
+
+        <TextView
+            android:id="@+id/tv_page_max"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="47"
+            />
+
+        <Button
+            android:id="@+id/btn_next_arrow"
+            android:layout_weight="1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_baseline_next_arrow_right_24"
+            />
+
+        <Button
+            android:id="@+id/btn_last_arrow"
+            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_baseline_last_next_24"
+            />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dashboard_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/dashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        app:layout_constraintTop_toBottomOf="@id/ll_page_menu"
+        tools:listitem="@layout/dashboard" />
 
 
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

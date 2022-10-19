@@ -1,8 +1,10 @@
 package com.lib_data.domain.models
 
-import com.google.gson.annotations.SerializedName
-
 data class CharacterWrapper(
-    @SerializedName(value = "results")
-    val characters: List<Characters>
+    val results: List<CharacterDetails>,
+    val info: CharacterInfo,
+    val previousPage: Int?,
+    val nextPage: Int?,
+    val lastUpdated: Long? = null
+
 )
