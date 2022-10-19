@@ -8,6 +8,7 @@ import com.example.lib_data.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import com.example.lib_data.domain.models.Character
 
 
 class RepositoryImpl @Inject constructor(
@@ -29,6 +30,19 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getEpisodeById(id: Int): Resource<Episode> = withContext(Dispatchers.IO) {
         return@withContext try {
             val res = apiInstance.getEpisodeById()
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("I AM BROKEN")
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.toString())
+        }
+    }
+
+    override suspend fun getCharactersById(id: String): Resource<Character> = withContext(Dispatchers.IO) {
+        return@withContext try {
+            val res = apiInstance.getCharactersById(id)
             if (res.isSuccessful && res.body() != null) {
                 Resource.Success(res.body()!!)
             } else {

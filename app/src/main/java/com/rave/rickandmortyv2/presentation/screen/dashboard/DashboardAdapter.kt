@@ -7,7 +7,9 @@ import coil.load
 import com.rave.rickandmortyv2.databinding.CharacterBinding
 import com.example.lib_data.domain.models.Character
 
-class DashboardAdapter(): RecyclerView.Adapter<DashboardAdapter.MyViewHolder>() {
+class DashboardAdapter(
+    private val navToDetails:(characterId: String) -> Unit
+): RecyclerView.Adapter<DashboardAdapter.MyViewHolder>() {
 
     private var charData: List<Character> = emptyList()
 
@@ -21,6 +23,10 @@ class DashboardAdapter(): RecyclerView.Adapter<DashboardAdapter.MyViewHolder>() 
             binding.tvStatus.text = char.status
             binding.imageView.load(char.image)
             binding.tvLocation.text = char.location.name
+
+            binding.root.setOnClickListener {
+                navToDetails(char.id.toString())
+            }
 
         }
     }

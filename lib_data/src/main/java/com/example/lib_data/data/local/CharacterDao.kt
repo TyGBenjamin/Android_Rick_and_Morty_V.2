@@ -12,7 +12,7 @@ interface CharacterDao {
     fun getCharacters(): Flow<List<Character>>
 
     @Query("select * from character where id = :id")
-    suspend fun getCharactersById(id:Int): com.example.lib_data.domain.models.Character?
+    suspend fun getCharactersById(id:Int): Character?
 
 
 

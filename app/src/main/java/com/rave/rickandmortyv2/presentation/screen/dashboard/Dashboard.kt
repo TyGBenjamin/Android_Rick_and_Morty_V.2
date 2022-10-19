@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.lib_data.domain.models.Data
 import com.example.lib_data.util.Resource
 import com.rave.rickandmortyv2.R
@@ -23,7 +24,7 @@ class Dashboard : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
     private val binding: FragmentDashboardBinding get() = _binding!!
     private val viewModel by viewModels<DashboardViewModel>()
-    private val dashboardAdapter by lazy { DashboardAdapter() }
+    private val dashboardAdapter by lazy { DashboardAdapter(::navToDetails)}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,21 +40,24 @@ class Dashboard : Fragment() {
 
 
 
+
     private fun initViews() = with(binding) {
         lifecycleScope.launch {
             viewModel.Char.collectLatest { viewState ->
                 when (viewState) {
                     is Resource.Error -> viewState.message
                     is Resource.Loading -> Log.d(TAG, "initViews: Loading....")
-                    is Resource.Success -> recyclerView.adapter = dashboardAdapter.apply {
-                        addData(viewState.data.results)
-                    }
+                    is Resource.Success -> recyclerView.adapter = dashboardAdapter.apply { addData(viewState.data.results) }
+
                 }
 
             }
         }
 
     }
-
+    private fun navToDetails(characterId: String){
+        val action = DashboardDirections.actionDashboardToCharacterDetails(characterId)
+        findNavController().navigate(action)
+    }
 
 }

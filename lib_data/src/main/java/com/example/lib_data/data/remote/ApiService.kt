@@ -8,6 +8,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import com.example.lib_data.domain.models.Character
+import dagger.Provides
+import retrofit2.http.Path
+
 
 interface ApiService {
 
@@ -16,6 +20,9 @@ interface ApiService {
 
     @GET("episode/{id}")
     suspend fun getEpisodeById(): Response<Episode>
+
+    @GET("character/{id}")
+    suspend fun  getCharactersById(@Path("id")id:String): Response<Character>
 
 
 
