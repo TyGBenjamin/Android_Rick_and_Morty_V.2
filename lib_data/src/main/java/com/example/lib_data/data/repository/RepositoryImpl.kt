@@ -1,7 +1,7 @@
 package com.example.lib_data.data.repository
 
+import com.example.lib_data.data.remote.ApiService
 import com.example.lib_data.domain.models.Data
-import com.example.lib_data.domain.remote.ApiService
 import com.example.lib_data.domain.repository.Repository
 import com.example.lib_data.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +15,7 @@ class RepositoryImpl @Inject constructor(private var apiInstance: ApiService) : 
             if (res.isSuccessful && res.body() != null) {
                 Resource.Success(res.body()!!)
             } else {
-                Resource.Error("An Error Occurred")
+                Resource.Error(res.message())
             }
 
         } catch (e: Exception) {
@@ -23,7 +23,7 @@ class RepositoryImpl @Inject constructor(private var apiInstance: ApiService) : 
         }
     }
 
-    override suspend fun getCharacterById(id: String): Resource<Data> {
+    override suspend fun getCharacterById(id: Int): Resource<Data> {
         TODO("Not yet implemented")
     }
 

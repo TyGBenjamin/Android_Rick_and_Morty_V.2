@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboard">
 
+    <fragment
+        android:id="@+id/dashboard"
+        android:name="com.rave.rickandmortyv2.presentation.screens.dashboard.Dashboard"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboard_to_charDetails"
+            app:destination="@id/charDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/charDetails"
+        android:name="com.rave.rickandmortyv2.presentation.screens.char_details.CharDetails"
+        android:label="fragment_char_details"
+        tools:layout="@layout/fragment_char_details" >
+        <action
+            android:id="@+id/action_charDetails_to_locationDetails"
+            app:destination="@id/locationDetails" />
+        <action
+            android:id="@+id/action_charDetails_to_characterEpisodeList"
+            app:destination="@id/characterEpisodeList" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationDetails"
+        android:name="com.rave.rickandmortyv2.presentation.screens.location_details.LocationDetails"
+        android:label="fragment_location_details"
+        tools:layout="@layout/fragment_location_details" >
+        <action
+            android:id="@+id/action_locationDetails_to_charDetails"
+            app:destination="@id/charDetails" />
+        <argument
+            android:name="locationId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterEpisodeList"
+        android:name="com.rave.rickandmortyv2.presentation.screens.char_show_EpisodesCharAppears.CharacterEpisodeList"
+        android:label="fragment_character_episode_list"
+        tools:layout="@layout/fragment_character_episode_list" >
+        <action
+            android:id="@+id/action_characterEpisodeList_to_episodeCharAppearance"
+            app:destination="@id/episodeCharAppearance" />
+        <argument
+            android:name="charID"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeCharAppearance"
+        android:name="com.rave.rickandmortyv2.EpisodeCharAppearance"
+        android:label="fragment_episode_char_appearance"
+        tools:layout="@layout/fragment_episode_char_appearance" >
+        <action
+            android:id="@+id/action_episodeCharAppearance_to_charDetails"
+            app:destination="@id/charDetails" />
+        <argument
+            android:name="episodeId"
+            app:argType="string" />
+    </fragment>
 </navigation>
