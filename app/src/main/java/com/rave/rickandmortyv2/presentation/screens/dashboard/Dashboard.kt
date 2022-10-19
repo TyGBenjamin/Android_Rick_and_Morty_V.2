@@ -1,20 +1,18 @@
 package com.rave.rickandmortyv2.presentation.screens.dashboard
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity.apply
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.lib_data.utils.Resource
-import com.rave.rickandmortyv2.R
 import com.rave.rickandmortyv2.adapters.DashboardAdapter
-import com.rave.rickandmortyv2.databinding.CharListBinding
 import com.rave.rickandmortyv2.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -26,7 +24,7 @@ class Dashboard : Fragment() {
         private var _binding: FragmentDashboardBinding? = null
         private val binding: FragmentDashboardBinding get() = _binding!!
         private val viewModel by viewModels<DashboardViewModel>()
-        private  val dashboardAdapter by lazy {DashboardAdapter()}
+        private  val dashboardAdapter by lazy {DashboardAdapter(::navigateToDetails)}
 //    private val charAdapter: CharAdapter by lazy { CharAdapter(::navigateToDetails) }
 
         override fun onCreateView(
@@ -63,10 +61,10 @@ class Dashboard : Fragment() {
 
         }
 
-//        private fun navigateToDetails(charId: String) {
-//            val action = DashboardDirections.actionDashboardToCharDetails(charId)
-//            findNavController().navigate(action)
-//        }
+        private fun navigateToDetails(charId: Int) {
+            val action = DashboardDirections.actionDashboardToCharDetails(charId)
+            findNavController().navigate(action)
+        }
 
         companion object {
             const val TAG = "DashboardFragmentLogger"

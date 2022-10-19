@@ -9,7 +9,7 @@ import com.rave.rickandmortyv2.databinding.CharListBinding
 
 
 class DashboardAdapter(
-//    val navigate: (id: Int) -> Unit
+    val navigate: (id: Int) -> Unit
 ) : RecyclerView.Adapter<DashboardAdapter.CharListViewHolder>() {
     private var charList: List<com.example.lib_data.domain.models.Character> = emptyList()
 
@@ -21,11 +21,13 @@ class DashboardAdapter(
             tvSpecies.text = char.species
             tvLife.text = char.status
             tvLocation.text = char.location.name
+            tvEpisode.text = char.episode.size.toString()
             imageView.load(char.image)
 
             root.setOnClickListener{
-                Log.d("CLICK", "applyAnime: ${char.id}")
-//                navigate(char.id)
+                println("root clicked")
+                Log.d("CLICK", "applyChar: ${char.id}")
+                navigate(char.id)
             }
         }
     }
