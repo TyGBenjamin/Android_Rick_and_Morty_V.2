@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Rick And Morty v2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="last_known_location">Last Known Location:</string>
+    <string name="first_seen_in">First Seen In:</string>
+    <string name="name">Name</string>
+    <string name="status">Status:</string>
+    <string name="species">Species:</string>
+    <string name="rick_and_morty">Rick And Morty</string>
+    <string name="character_name">Character Name</string>
+    <string name="gender">Gender:</string>
+    <string name="origin">Origin:</string>
+    <string name="location">Location:</string>
+    <string name="episodes">Episodes:</string>
+    <string name="location_name">Location Name</string>
+    <string name="location_type">Location Type</string>
+    <string name="dimenstion">Dimenstion</string>
+    <string name="residents">Residents</string>
+    <string name="air_date">Air Date</string>
+    <string name="character_appearances">Character Appearances</string>
 </resources>
