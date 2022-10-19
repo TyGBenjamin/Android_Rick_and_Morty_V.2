@@ -19,6 +19,8 @@ class DashboardViewModel @Inject constructor(
     private val _chars: MutableStateFlow<Resource<CharacterListWrapper>> =
         MutableStateFlow(Resource.Loading)
     val chars = _chars.asStateFlow()
+    private val _origin: MutableStateFlow<String> = MutableStateFlow("")
+    val origin = _origin.asStateFlow()
 
     init {
         getCharacters()
@@ -28,22 +30,25 @@ class DashboardViewModel @Inject constructor(
         _chars.value = repo.getCharacters()
     }
 
+    private fun setOrigin(origin: String) {
+        _origin.value = origin
+    }
+
 //    fun getEpisodeById(episodeId: String): Resource<Episode> {
 //        viewModelScope.launch { repo.getEpisodeById(episodeId.toInt()) }
 //    }
 
-    fun getEpisodeName(episodeId: String): String {
+    fun getOriginName(episodeId: String): String {
         var name = "error"
-//        viewModelScope.launch {
-//            when(val episode = repo.getEpisodeById(episodeId.toInt())) {
-//                is Resource.Error -> {println("Error")}
-//                Resource.Loading -> {println("Loading")}
-//                is Resource.Success -> {
-//                    name = episode.data.name
-//                    println("success $name")
-//                }
-//            }
-//        }
+        viewModelScope.launch {
+            when(val episode = repo.getEpisodeById(episodeId.toInt())) {
+                is Resource.Error -> {println("Error")}
+                Resource.Loading -> {println("Loading")}
+                is Resource.Success -> {
+                    episode.data.name
+                }
+            }
+        }
         return name
     }
 }

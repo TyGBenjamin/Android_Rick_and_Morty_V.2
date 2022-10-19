@@ -9,9 +9,10 @@ import com.example.lib_data.domain.models.Character
 
 class DashboardAdapter(
     private val handleThumbnailClick: (id: String) -> Unit,
-    private val getEpisodeName: (url: String) -> String
+    private val getOriginName: (url: String) -> String
 ) : RecyclerView.Adapter<DashboardAdapter.ThumbnailViewHolder>() {
     private var characters: MutableList<Character> = mutableListOf()
+    private var origin = ""
 
     inner class ThumbnailViewHolder(
         private val binding: ThumbnailDashboardBinding
@@ -22,7 +23,10 @@ class DashboardAdapter(
             tvThumbnailSpecies.text = char.species
             ivThumbnail.load(char.image)
             tvLocation.text = char.location.name
-            tvFirstEpisode.text = getEpisodeName(char.episode[0])
+
+            if (char.origin.url?.isNotEmpty()!!) {
+                tvFirstEpisode.text = getOriginName(char.origin.url!!)
+            }
 
             root.setOnClickListener { handleThumbnailClick(char.id.toString()) }
         }
@@ -40,5 +44,11 @@ class DashboardAdapter(
 
     override fun getItemCount() = characters.size
 
-    fun setCharacters(chars: List<Character>) { characters = chars as MutableList }
+    fun setCharacters(chars: List<Character>) {
+        characters = chars as MutableList
+    }
+
+    fun setOrigin(ori: String) {
+        origin = ori
+    }
 }

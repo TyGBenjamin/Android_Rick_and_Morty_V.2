@@ -24,7 +24,7 @@ class DashboardFragment : Fragment() {
     private val adapter by lazy {
         DashboardAdapter(
             @DashboardFragment ::handleThumbnailClick,
-            @DashboardFragment ::getEpisodeName
+            @DashboardFragment ::getOriginName
         )
     }
 
@@ -54,14 +54,20 @@ class DashboardFragment : Fragment() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            viewModel.origin.collectLatest { origin ->
+                rvList.adapter = adapter.apply { setOrigin(origin) }
+            }
+        }
     }
 
     private fun handleThumbnailClick(id: String) {
         navigateToCharDetails(id)
     }
 
-    private fun getEpisodeName(url: String): String {
-        return viewModel.getEpisodeName(GET_ID_BY_URL(url))
+    private fun getOriginName(url: String): String {
+        return viewModel.getOriginName(GET_ID_BY_URL(url))
     }
 
     private fun navigateToCharDetails(charId: String) {

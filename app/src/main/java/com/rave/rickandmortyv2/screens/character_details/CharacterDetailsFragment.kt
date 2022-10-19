@@ -57,12 +57,12 @@ class CharacterDetailsFragment : Fragment() {
                             character.data.episode.size.toString() + " total episodes"
 
                         btnToLocation.setOnClickListener {
-                            if(character.data.location.url != null) {
+                            if(character.data.location.url != "") {
                                 navigateToLocationDetails(GET_ID_BY_URL(character.data.location.url!!))
                             }
                         }
                         btnToOrigin.setOnClickListener {
-                            if(character.data.location.url != null) {
+                            if(character.data.origin.url != "") {
                                 navigateToLocationDetails(GET_ID_BY_URL(character.data.origin.url!!))
                             }
                         }
