@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/episodeCharAppearance"
-        android:name="com.rave.rickandmortyv2.EpisodeCharAppearance"
+        android:name="com.rave.rickandmortyv2.presentation.screens.episode_show_characterThatAppear.EpisodeCharAppearance"
         android:label="fragment_episode_char_appearance"
         tools:layout="@layout/fragment_episode_char_appearance" >
         <action
