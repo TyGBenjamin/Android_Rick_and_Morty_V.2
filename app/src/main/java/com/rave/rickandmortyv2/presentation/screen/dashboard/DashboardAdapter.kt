@@ -7,6 +7,8 @@ import coil.load
 import com.rave.rickandmortyv2.databinding.CharacterBinding
 import com.example.lib_data.domain.models.Character
 
+
+//Remote Mediator
 class DashboardAdapter(
     private val navToDetails:(characterId: String) -> Unit
 ): RecyclerView.Adapter<DashboardAdapter.MyViewHolder>() {
