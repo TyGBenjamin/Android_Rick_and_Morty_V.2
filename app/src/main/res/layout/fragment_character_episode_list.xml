@@ -3,157 +3,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/teal_200">
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="@color/black"
-        app:cardCornerRadius="@android:dimen/thumbnail_height"
-        app:layout_constraintVertical_bias="0.5">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="141dp"
-            android:layout_margin="10dp">
+
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:id="@+id/imageView3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_margin="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:textColor="@color/white"
-                android:shadowColor="@color/white"
-                android:layout_width="200dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="10dp"
-                android:gravity="center"
-                android:hint="NAME"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@id/tv_species"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@id/imageView"
-                app:layout_constraintVertical_bias="0.173"
-                tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:shadowColor="@color/white"
+        android:text="Char Name's"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/rv_episode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@id/imageView3"
+        app:layout_constraintVertical_bias="0.16000003"
+        tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/tv_species"
-                android:textColor="@color/white"
-                android:layout_width="75dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="10dp"
-                android:gravity="center"
-                android:hint="Species"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/tv_location"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.182"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.506"
-                tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/tv_title2"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:shadowColor="@color/white"
+        android:text="Episodes"
+        android:textColor="@color/white"
 
-            <TextView
-                android:id="@+id/tv_life"
-                android:layout_width="75dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="10dp"
-                android:hint="alive"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toTopOf="@id/tv_location"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.526"
-                app:layout_constraintStart_toEndOf="@id/tv_species"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                app:layout_constraintVertical_bias="0.0"
-                tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toTopOf="@+id/rv_episode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toEndOf="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.039"
+        tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="158dp"
-                android:layout_height="20dp"
-                android:textColor="@color/white"
-                android:layout_marginStart="10dp"
-                android:gravity="center"
-                android:hint="Citadel of Ricks"
-                android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.315"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@id/tv_species"
-                app:layout_constraintVertical_bias="0.84"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/tv_locationHard"
-                android:textColor="@color/white"
-                android:layout_width="158dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="10dp"
-                android:gravity="center"
-                android:text="Last known location"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toTopOf="@id/tv_location"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.315"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@id/tv_species"
-                app:layout_constraintVertical_bias="0.0"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/tv_episodeHard"
-                android:layout_width="158dp"
-                android:layout_height="20dp"
-                android:textColor="@color/white"
-                android:layout_marginStart="10dp"
-                android:gravity="center"
-                android:text="First Seen in"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.315"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@id/tv_location"
-                app:layout_constraintVertical_bias="0.058"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/tv_episode"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="10dp"
-                android:gravity="center"
-                android:hint="#int"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/tv_episodeHard"
-                app:layout_constraintTop_toBottomOf="@id/tv_location"
-                app:layout_constraintVertical_bias="0.083"
-                tools:ignore="MissingConstraints" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_episode"
+        android:layout_width="match_parent"
+        android:layout_height="630dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView3"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/episode_list" />
 
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

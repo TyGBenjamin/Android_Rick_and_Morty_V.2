@@ -2,21 +2,17 @@ package com.rave.rickandmortyv2.presentation.screens.location_details
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity.apply
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.GravityCompat.apply
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.lib_data.utils.Resource
 import com.rave.rickandmortyv2.adapters.LocationAdapter
 import com.rave.rickandmortyv2.databinding.FragmentLocationDetailsBinding
-import com.rave.rickandmortyv2.presentation.screens.dashboard.DashboardDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -70,12 +66,12 @@ class LocationDetails : Fragment() {
     }
 
     private fun navigateToChar(charId: Int) {
-        val action = DashboardDirections.actionDashboardToCharDetails(charId)
+        val action = LocationDetailsDirections.actionLocationDetailsToCharDetails(charId)
         findNavController().navigate(action)
     }
 
     companion object {
-        const val TAG = "DashboardFragmentLogger"
+        const val TAG = "LocationFragmentLogger"
     }
 }
 //

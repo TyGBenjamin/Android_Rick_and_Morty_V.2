@@ -1,9 +1,11 @@
 package com.rave.rickandmortyv2.adapters
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lib_data.utils.Constants.getIdFromUrl
 import com.rave.rickandmortyv2.databinding.ResidentListBinding
 
 
@@ -18,11 +20,11 @@ class LocationAdapter(
         fun applyResidents(resident: String) = with(binding) {
            tvTitle.text = resident
 
-//            root.setOnClickListener{
-//                println("root clicked")
-//                Log.d("CLICK", "applyChar: ${location.id}")
-//                navigate(location.id)
-//            }
+            root.setOnClickListener{
+                println("root clicked")
+                Log.d("CLICK", "applyChar: ${resident}")
+                navigate(getIdFromUrl(resident))
+            }
         }
     }
 

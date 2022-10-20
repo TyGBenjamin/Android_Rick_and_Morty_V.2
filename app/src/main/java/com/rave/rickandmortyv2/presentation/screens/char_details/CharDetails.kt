@@ -55,6 +55,11 @@ class CharDetails : Fragment() {
         findNavController().navigate(action)
     }
 
+    private fun navToEpisode(locationId: Int){
+        val action = CharDetailsDirections.actionCharDetailsToCharacterEpisodeList(locationId)
+        findNavController().navigate(action)
+    }
+
     private fun initViews() = with(binding) {
         lifecycleScope.launch {
             viewModel.setChar(safeArgs.id)
@@ -87,14 +92,16 @@ class CharDetails : Fragment() {
                         }
                         btnOrigin.setOnClickListener{
                             println("Location Button Clicked")
-                            if(char.data.location.url != null){
+                            if(char.data.origin.url != null){
                                 navToLocation(getIdFromUrl(char.data.origin.url!!))
                             }
                         }
 
                         btnEpisode.setOnClickListener{
                             println("Episode Button Clicked")
-                            //TODO
+                            if(char.data.episode.isNotEmpty()){
+                                navToEpisode(char.data.id)
+                            }
                         }
 
                     }
