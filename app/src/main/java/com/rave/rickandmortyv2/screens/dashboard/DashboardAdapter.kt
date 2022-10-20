@@ -2,6 +2,8 @@ package com.rave.rickandmortyv2.screens.dashboard
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.rave.rickandmortyv2.databinding.ThumbnailDashboardBinding
@@ -10,8 +12,7 @@ import com.example.lib_data.domain.util.Constants.GET_ID_BY_URL
 
 class DashboardAdapter(
     private val handleThumbnailClick: (id: String) -> Unit
-) : RecyclerView.Adapter<DashboardAdapter.ThumbnailViewHolder>() {
-    private var characters: MutableList<Character> = mutableListOf()
+) : PagingDataAdapter<Character, DashboardAdapter.ThumbnailViewHolder>(COMPARATOR) {
 
     inner class ThumbnailViewHolder(
         private val binding: ThumbnailDashboardBinding
@@ -34,14 +35,20 @@ class DashboardAdapter(
     }
 
     override fun onBindViewHolder(holder: ThumbnailViewHolder, position: Int) {
-        holder.applyItem(characters[position])
-
+        getItem(position)?.let { char ->
+            holder.applyItem(char)
+        }
     }
 
-    override fun getItemCount() = characters.size
+    companion object {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<Character>() {
+            override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean =
+                oldItem.id == newItem.id
 
-    fun setCharacters(chars: List<Character>) {
-        characters = chars as MutableList
+            override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean =
+                oldItem == newItem
+
+        }
     }
 
 }

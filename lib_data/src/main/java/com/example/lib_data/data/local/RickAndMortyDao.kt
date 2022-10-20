@@ -1,5 +1,6 @@
 package com.example.lib_data.data.local
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -13,17 +14,20 @@ import retrofit2.Response
 @Dao
 interface RickAndMortyDao {
     @Query("SELECT * FROM characters")
-    fun getCharacters(): Flow<List<Character>>
+    fun getCharacters(): PagingSource<Int, Character>
 
     @Query("SELECT * FROM characters WHERE id in(:id)")
-    suspend fun getCharacterById(id: Int): Character
+    fun getCharacterById(id: Int): Character
 
     @Insert(onConflict = REPLACE)
-    suspend fun insertCharacter(character: Character)
+    fun insertCharacters(characters: List<Character>)
 
     @Insert
     suspend fun insertCharacters(vararg characters: Character)
 
     @Delete
     suspend fun deleteCharacters(vararg characters: Character)
+
+    @Query("DELETE FROM characters")
+    fun deleteAll()
 }

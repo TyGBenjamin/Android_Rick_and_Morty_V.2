@@ -18,7 +18,5 @@ class CharacterDetailsViewModel @Inject constructor(
     private val _char: MutableStateFlow<Resource<Character>> = MutableStateFlow(Resource.Loading)
     val char = _char.asStateFlow()
 
-    fun setCharacter(id: Int) = viewModelScope.launch {
-        _char.value = repo.getCharacterById(id)
-    }
+    fun setCharacter(id: Int) = viewModelScope.launch { _char.value = repo.getCharacterById(id) }
 }

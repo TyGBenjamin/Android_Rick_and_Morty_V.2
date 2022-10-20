@@ -7,10 +7,11 @@ import com.example.lib_data.domain.models.Location
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RickAndMortyApi {
     @GET("/api/character")
-    suspend fun getCharacters(): Response<CharacterListWrapper>
+    suspend fun getCharacters(@Query("page") page: Int): CharacterListWrapper
 
     @GET("/api/character/{id}")
     suspend fun getCharacterById(@Path("id") id: Int): Response<Character>

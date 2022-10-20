@@ -41,22 +41,13 @@ class DashboardFragment : Fragment() {
     }
 
     private fun initViews() = with(binding) {
-        collectLatestLifecycleFlow(viewModel.chars) { charList ->
-            when (charList) {
-                is Resource.Error -> {}
-                Resource.Loading -> {
-                    Toast.makeText(context, "Fetching Data...", Toast.LENGTH_SHORT).show()
-                }
-                is Resource.Success -> {
-                    rvList.adapter = adapter.apply { setCharacters(charList.data.results) }
-                }
-            }
+        rvList.adapter = adapter
+        collectLatestLifecycleFlow(viewModel.characterList) { charList ->
+            charList?.let { adapter.submitData(charList) }
         }
     }
 
-    private fun handleThumbnailClick(id: String) {
-        navigateToCharDetails(id)
-    }
+    private fun handleThumbnailClick(id: String) { navigateToCharDetails(id) }
 
     private fun navigateToCharDetails(charId: String) {
         val action =

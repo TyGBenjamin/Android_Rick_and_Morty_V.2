@@ -23,11 +23,7 @@ class EpisodesListViewModel@Inject constructor(
     private val _episode: MutableStateFlow<Resource<Episode>> = MutableStateFlow(Resource.Loading)
     val episode = _episode.asStateFlow()
 
-    fun setCharacter(id: Int) = viewModelScope.launch {
-        _char.value = repo.getCharacterById(id)
-    }
+    fun setCharacter(id: Int) = viewModelScope.launch { _char.value = repo.getCharacterById(id) }
 
-    fun setEpisode(id: Int) = viewModelScope.launch {
-        _episode.value = repo.getEpisodeById(id)
-    }
+    fun setEpisode(id: Int) = viewModelScope.launch { _episode.value = repo.getEpisodeById(id) }
 }
