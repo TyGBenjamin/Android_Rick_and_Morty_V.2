@@ -1,4 +1,4 @@
-package com.rave.rickandmortyv2
+package com.rave.rickandmortyv2.presentation.screens.episode_show_characterThatAppear
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.rave.rickandmortyv2.R
 
 class EpisodeCharAppearance : Fragment() {
 

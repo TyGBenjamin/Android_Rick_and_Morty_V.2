@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -17,6 +18,7 @@
 
     <TextView
         android:id="@+id/tv_charName"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="51dp"
         android:text="Rick Sachez"
@@ -28,12 +30,13 @@
 
     <TextView
         android:id="@+id/tv_charStat"
+        android:textColor="@color/white"
         android:layout_width="80dp"
         android:layout_height="29dp"
         android:text="Alive"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintBottom_toTopOf="@+id/btn_origin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +45,7 @@
 
     <TextView
         android:id="@+id/tv_gender"
+        android:textColor="@color/white"
         android:layout_width="59dp"
         android:layout_height="22dp"
         android:layout_marginTop="8dp"
@@ -57,6 +61,7 @@
 
     <TextView
         android:id="@+id/tv_species"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="22dp"
         android:layout_marginTop="8dp"
@@ -70,23 +75,25 @@
 
     <TextView
         android:id="@+id/tv_origName"
+        android:textColor="@color/white"
         android:layout_width="93dp"
         android:layout_height="19dp"
         android:text="Earth(C-137)"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/textView12"
+        app:layout_constraintBottom_toTopOf="@+id/btn_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/btn_origin"
         app:layout_constraintVertical_bias="0.5" />
 
-    <TextView
-        android:id="@+id/textView12"
+    <Button
+        android:id="@+id/btn_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
-        android:textSize="20sp"
+        android:textSize="10sp"
         android:textStyle="bold"
+        android:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/tv_charLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +102,7 @@
 
     <TextView
         android:id="@+id/tv_charLocation"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Citadel of Ricks"
@@ -102,16 +110,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/btn_location"
         app:layout_constraintVertical_bias="0.5" />
 
-    <TextView
-        android:id="@+id/textView8"
+    <Button
+        android:id="@+id/btn_origin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Origin"
-        android:textSize="20sp"
+        android:textSize="10sp"
         android:textStyle="bold"
+        android:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@+id/tv_origName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,12 +129,13 @@
 
     <TextView
         android:id="@+id/textview_ep"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Episode"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_episode2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_episode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,14 +143,16 @@
         app:layout_constraintVertical_bias="0.5"
         tools:text="Episodes:" />
 
-    <TextView
-        android:id="@+id/tv_episode2"
-        android:layout_width="69dp"
-        android:layout_height="20dp"
+    <Button
+        android:id="@+id/btn_episode"
+        android:textColor="@color/white"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="171dp"
         android:layout_marginEnd="171dp"
         android:text="50"
         android:textAlignment="center"
+        android:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

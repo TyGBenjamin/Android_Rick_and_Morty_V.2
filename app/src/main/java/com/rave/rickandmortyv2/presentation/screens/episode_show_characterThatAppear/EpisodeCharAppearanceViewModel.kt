@@ -1,4 +1,4 @@
-package com.rave.rickandmortyv2
+package com.rave.rickandmortyv2.presentation.screens.episode_show_characterThatAppear
 
 import androidx.lifecycle.ViewModel
 

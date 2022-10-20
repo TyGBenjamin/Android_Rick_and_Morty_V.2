@@ -25,4 +25,6 @@ class CharDetailsViewModel @Inject constructor(
             _char.value = repo.getCharacterById(charId)
         }
     }
+
+
 }

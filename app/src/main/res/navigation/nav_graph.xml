@@ -39,7 +39,7 @@
             app:destination="@id/charDetails" />
         <argument
             android:name="locationId"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/characterEpisodeList"
@@ -51,18 +51,15 @@
             app:destination="@id/episodeCharAppearance" />
         <argument
             android:name="charID"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/episodeCharAppearance"
-        android:name="com.rave.rickandmortyv2.EpisodeCharAppearance"
+        android:name="com.rave.rickandmortyv2.presentation.screens.episode_show_characterThatAppear.EpisodeCharAppearance"
         android:label="fragment_episode_char_appearance"
         tools:layout="@layout/fragment_episode_char_appearance" >
-        <action
-            android:id="@+id/action_episodeCharAppearance_to_charDetails"
-            app:destination="@id/charDetails" />
         <argument
             android:name="episodeId"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
 </navigation>
