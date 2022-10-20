@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.lib_data.domain.models.Episode
 import com.example.lib_data.utils.Constants
+import com.example.lib_data.utils.Constants.getIdFromUrl
 import com.rave.rickandmortyv2.databinding.EpisodeListBinding
 import com.rave.rickandmortyv2.databinding.FragmentCharacterEpisodeListBinding
 import com.rave.rickandmortyv2.databinding.FragmentEpisodeCharAppearanceBinding
@@ -30,7 +31,8 @@ class AppearanceAdapter(
             root.setOnClickListener{
                 println("root clicked")
                 Log.d("CLICK", "applyChar: ${char}")
-                navigate(Constants.getIdFromUrl(char.url))
+//                navigate(getIdFromUrl())
+                navigate(char.id)
             }
         }
     }

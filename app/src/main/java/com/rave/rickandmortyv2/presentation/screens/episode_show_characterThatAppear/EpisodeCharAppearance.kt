@@ -39,7 +39,7 @@ class EpisodeCharAppearance : Fragment() {
     private val binding: FragmentEpisodeCharAppearanceBinding get() = _binding!!
     private val viewModel by viewModels<EpisodeCharAppearanceViewModel>()
     private val safeArgs: EpisodeCharAppearanceArgs by navArgs()
-    private val appearanceAdapter by lazy { AppearanceAdapter(::navigateToAppearance) }
+    private val appearanceAdapter by lazy { AppearanceAdapter(::navigateToChar) }
     private var trackList: MutableList<com.example.lib_data.domain.models.Character> = mutableListOf()
 
     override fun onCreateView(
@@ -106,10 +106,10 @@ class EpisodeCharAppearance : Fragment() {
 
     }
 
-    private fun navigateToAppearance(episodeId: Int) {
+    private fun navigateToChar(Id: Int) {
         val action =
-            CharacterEpisodeListDirections.actionCharacterEpisodeListToEpisodeCharAppearance(
-                episodeId
+            EpisodeCharAppearanceDirections.actionEpisodeCharAppearanceToCharDetails(
+                Id
             )
         findNavController().navigate(action)
     }
