@@ -46,18 +46,17 @@
         android:name="com.rave.rickandmortyv2.presentation.screens.char_show_EpisodesCharAppears.CharacterEpisodeList"
         android:label="fragment_character_episode_list"
         tools:layout="@layout/fragment_character_episode_list" >
-        <action
-            android:id="@+id/action_characterEpisodeList_to_episodeCharAppearance"
-            app:destination="@id/episodeCharAppearance" />
         <argument
             android:name="charID"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_characterEpisodeList_to_episodeCharAppearance"
+            app:destination="@id/episodeCharAppearance" />
     </fragment>
     <fragment
         android:id="@+id/episodeCharAppearance"
-        android:name="com.rave.rickandmortyv2.presentation.screens.episode_show_characterThatAppear.EpisodeCharAppearance"
-        android:label="fragment_episode_char_appearance"
-        tools:layout="@layout/fragment_episode_char_appearance" >
+        android:name="com.rave.rickandmortyv2.presentation.screens.char_show_EpisodesCharAppears.EpisodeCharAppearance"
+        android:label="EpisodeCharAppearance" >
         <argument
             android:name="episodeId"
             app:argType="integer" />

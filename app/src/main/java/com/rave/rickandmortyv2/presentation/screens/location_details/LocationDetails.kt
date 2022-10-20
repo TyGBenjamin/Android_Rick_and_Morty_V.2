@@ -16,6 +16,9 @@ import com.rave.rickandmortyv2.databinding.FragmentLocationDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import com.example.lib_data.domain.models.Character
+import com.example.lib_data.utils.Constants
+import com.rave.rickandmortyv2.presentation.screens.char_show_EpisodesCharAppears.CharacterEpisodeList.Companion.TAG
 
 @AndroidEntryPoint
 class LocationDetails : Fragment() {
@@ -23,8 +26,9 @@ class LocationDetails : Fragment() {
     private var _binding: FragmentLocationDetailsBinding? = null
     private val binding: FragmentLocationDetailsBinding get() = _binding!!
     private val viewModel by viewModels<LocationDetailsViewModel>()
-    private  val locationAdapter by lazy { LocationAdapter(::navigateToChar) }
+    private val locationAdapter by lazy { LocationAdapter(::navigateToChar) }
     private val safeArgs: LocationDetailsArgs by navArgs()
+    private val charList: MutableList<Character> = mutableListOf()
 //    private val charAdapter: CharAdapter by lazy { CharAdapter(::navigateToDetails) }
 
     override fun onCreateView(
@@ -41,9 +45,9 @@ class LocationDetails : Fragment() {
 
     private fun initViews() = with(binding) {
 //        rvView.adapter = charAdapter
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             viewModel.setLocation(safeArgs.locationId)
-            viewModel.locate.collectLatest{ viewState ->
+            viewModel.locate.collectLatest { viewState ->
                 when (viewState) {
                     is Resource.Error -> {
                         Log.d(TAG, "ERROR: ${viewState.message}")
@@ -52,31 +56,46 @@ class LocationDetails : Fragment() {
                         Log.d(TAG, "Loading...")
                     }
                     is Resource.Success -> rvLocation.adapter = locationAdapter.apply {
-                        addItems(viewState.data.residents)
+
                         Log.d(TAG, "IM OVER HERE")
                         tvDimension.text = viewState.data.dimension
-                        tvLocateName.text = viewState.data.name
-                        locateType.text = viewState.data.type
+                        tvEpisodeName.text = viewState.data.name
+                        airDate.text = viewState.data.type
+                        setLocationUrl(viewState.data.residents)
                     }
 
                 }
             }
         }
 
+        lifecycleScope.launch {
+            viewModel.char.collectLatest { char ->
+                rvLocation.adapter = locationAdapter
+                when(char) {
+                    is Resource.Error -> {}
+                    Resource.Loading -> {}
+                    is Resource.Success -> {
+                        charList.add(char.data)
+                        locationAdapter.addResidents(charList)
+                    }
+                }
+            }
+        }
     }
+
 
     private fun navigateToChar(charId: Int) {
         val action = LocationDetailsDirections.actionLocationDetailsToCharDetails(charId)
         findNavController().navigate(action)
     }
 
-    companion object {
-        const val TAG = "LocationFragmentLogger"
+    private fun setLocationUrl(resList: List<String>) {
+        for (resident in resList) {
+            viewModel.getCharacterDetails(Constants.getIdFromUrl(resident))
+        }
+
     }
+
 }
-//
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProvider(this).get(LocationDetailsViewModel::class.java)
-//        // TODO: Use the ViewModel
-//    }
+
+

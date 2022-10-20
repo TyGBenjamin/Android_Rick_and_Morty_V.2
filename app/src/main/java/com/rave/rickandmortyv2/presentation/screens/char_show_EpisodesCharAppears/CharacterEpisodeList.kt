@@ -105,9 +105,7 @@ class CharacterEpisodeList : Fragment() {
 
     private fun navigateToAppearance(episodeId: Int) {
         val action =
-            CharacterEpisodeListDirections.actionCharacterEpisodeListToEpisodeCharAppearance(
-                episodeId
-            )
+            CharacterEpisodeListDirections.actionCharacterEpisodeListToEpisodeCharAppearance(episodeId)
         findNavController().navigate(action)
     }
 
