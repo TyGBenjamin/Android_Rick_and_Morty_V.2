@@ -3,7 +3,6 @@ package com.rave.rickandmortyv2.presentation.screen.character_details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lib_data.data.repository.RepositoryImpl
-import com.example.lib_data.domain.models.Data
 import com.example.lib_data.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

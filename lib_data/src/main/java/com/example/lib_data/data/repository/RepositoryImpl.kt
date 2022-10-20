@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import com.example.lib_data.domain.models.Character
+import com.example.lib_data.domain.models.LocationDetails
 
 
 class RepositoryImpl @Inject constructor(
@@ -29,7 +30,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getEpisodeById(id: Int): Resource<Episode> = withContext(Dispatchers.IO) {
         return@withContext try {
-            val res = apiInstance.getEpisodeById()
+            val res = apiInstance.getEpisodeById(id)
             if (res.isSuccessful && res.body() != null) {
                 Resource.Success(res.body()!!)
             } else {
@@ -51,5 +52,24 @@ class RepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }
+
     }
+
+
+    override suspend fun getLocationById(id: String): Resource<LocationDetails> = withContext(Dispatchers.IO) {
+        return@withContext try {
+            val res = apiInstance.getLocationById(id)
+            if (res.isSuccessful && res.body() != null) {
+                Resource.Success(res.body()!!)
+            } else {
+                Resource.Error("I AM BROKEN")
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message.toString())
+        }
+    }
+
+
+
+
 }

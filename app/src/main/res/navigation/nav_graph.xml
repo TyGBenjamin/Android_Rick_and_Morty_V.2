@@ -72,6 +72,6 @@
             app:destination="@id/characterEpisode" />
         <argument
             android:name="episodeId"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
 </navigation>

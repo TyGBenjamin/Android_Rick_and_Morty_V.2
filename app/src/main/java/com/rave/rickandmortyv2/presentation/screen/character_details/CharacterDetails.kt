@@ -8,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.example.lib_data.util.Constants.getIdFromUrl
 import com.example.lib_data.util.Resource
 import com.rave.rickandmortyv2.R
 import com.rave.rickandmortyv2.databinding.FragmentCharacterDetailsBinding
+import com.rave.rickandmortyv2.presentation.screen.dashboard.DashboardDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,8 +37,12 @@ class CharacterDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getCharacterDetails(args.characterId)
+        initViews()
+        initListeners()
+    }
 
+    private fun initViews() = with(binding) {
+        viewModel.getCharacterDetails(args.characterId)
         lifecycleScope.launch{
             viewModel.char.collectLatest { charDetails->
                 when(charDetails){
@@ -44,7 +52,6 @@ class CharacterDetails : Fragment() {
                         Log.d("success", "onViewCreated: $charDetails")
                         with(binding){
                             tvCharLocation.text = charDetails.data.location.name
-
                             tvCharName.text = charDetails.data.name
                             tvCharStat.text = charDetails.data.status
                             imageView2.load(charDetails.data.image)
@@ -53,23 +60,60 @@ class CharacterDetails : Fragment() {
                             tvSpecies.text = charDetails.data.species
                             tvGender.text = charDetails.data.gender
 
-
                         }
                     }
-                    is Resource.Error -> TODO()
-                    Resource.Loading -> TODO()
-                    is Resource.Success -> TODO()
+
                 }
-
             }
-
-
-
         }
+    }
 
+    private fun initListeners() = with(binding) {
+        viewModel.getCharacterDetails(args.characterId)
+        lifecycleScope.launch{
+            viewModel.char.collectLatest { charDetails->
+                when(charDetails){
+                    is Resource.Error -> {}
+                    Resource.Loading -> {}
+                    is Resource.Success -> {
+                        Log.d("success", "onViewCreated: $charDetails")
+                            tvCharLocation.setOnClickListener{
+                                if (charDetails.data.location.url != null) {
+                                    navToLocation(getIdFromUrl(charDetails.data.location.url!!))
+                                }
+                            }
 
+                            tvOrigName.setOnClickListener{
+                                if (charDetails.data.location.url != null) {
+                                    navToLocation(getIdFromUrl(charDetails.data.location.url!!))
+                                }
+                            }
+
+                            tvEpNum.setOnClickListener{
+                                println("click : ${charDetails.data.id}")
+                                navToEpisode(charDetails.data.id.toString())
+                            }
+                    }
+
+                }
+            }
+        }
     }
 
 
 
+
+    private fun navToLocation(locationId: String){
+        val action = CharacterDetailsDirections.actionCharacterDetailsToLocationDetails2(locationId)
+        findNavController().navigate(action)
+    }
+
+    private fun navToEpisode(charId: String){
+        val action = CharacterDetailsDirections.actionCharacterDetailsToCharacterEpisode2(charId)
+        findNavController().navigate(action)
+    }
+
+
 }
+
+
