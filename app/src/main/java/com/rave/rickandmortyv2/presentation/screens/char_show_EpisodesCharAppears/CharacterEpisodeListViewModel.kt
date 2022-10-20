@@ -17,13 +17,26 @@ import javax.inject.Inject
 class CharacterEpisodeListViewModel @Inject constructor(
     private val repo: RepositoryImpl
 ) : ViewModel() {
-    private val _episode: MutableStateFlow<Resource<com.example.lib_data.domain.models.Character>?> =
+    private val _char: MutableStateFlow<Resource<com.example.lib_data.domain.models.Character>?> =
         MutableStateFlow(Resource.Loading)
-    val char = _episode.asStateFlow()
+    val char = _char.asStateFlow()
+
+    private val _episode: MutableStateFlow<Resource<com.example.lib_data.domain.models.Episode>?> =
+        MutableStateFlow(Resource.Loading)
+    val episode = _episode.asStateFlow()
 
     fun setChar(Id: Int) {
         viewModelScope.launch {
-            _episode.value = repo.getCharacterById(Id)
+            _char.value = repo.getCharacterById(Id)
         }
     }
+
+
+    fun setEpisode(Id: Int) {
+        viewModelScope.launch {
+            _episode.value = repo.getEpisodeById(Id)
+        }
+    }
+
+
 }

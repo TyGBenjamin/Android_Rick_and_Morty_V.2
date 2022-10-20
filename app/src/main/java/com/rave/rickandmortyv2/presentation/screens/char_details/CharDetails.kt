@@ -86,13 +86,13 @@ class CharDetails : Fragment() {
 
                         btnLocation.setOnClickListener{
                             println("Location Button Clicked")
-                            if(char.data.location.url != null){
+                            if(char.data.location.url?.isNotEmpty()!!){
                                 navToLocation(getIdFromUrl(char.data.location.url!!))
                             }
                         }
                         btnOrigin.setOnClickListener{
                             println("Location Button Clicked")
-                            if(char.data.origin.url != null){
+                            if(char.data.origin.url?.isNotEmpty()!!){
                                 navToLocation(getIdFromUrl(char.data.origin.url!!))
                             }
                         }
