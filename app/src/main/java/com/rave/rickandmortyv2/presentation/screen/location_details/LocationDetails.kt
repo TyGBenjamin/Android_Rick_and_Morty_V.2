@@ -68,6 +68,7 @@ class LocationDetails : Fragment() {
         lifecycleScope.launch{
             viewModel.char.collectLatest { char ->
                 rvCharApp.adapter = locationAdapter
+                println("CHAR LIST $char")
                 when (char) {
                     is Resource.Error -> char.message
                     is Resource.Loading -> Log.d(ContentValues.TAG, "initViews: Loading....")
