@@ -7,16 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import com.example.lib_data.domain.models.Character
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.lib_data.domain.util.Constants.GET_ID_BY_URL
 import com.example.lib_data.domain.util.Resource
+import com.example.lib_data.domain.util.collectLatestLifecycleFlow
 import com.rave.rickandmortyv2.databinding.FragmentLocationDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-
 @AndroidEntryPoint
 class LocationDetailsFragment : Fragment() {
     private var _binding: FragmentLocationDetailsBinding? = null
@@ -24,6 +22,7 @@ class LocationDetailsFragment : Fragment() {
     private val viewModel by viewModels<LocationDetailsViewModel>()
     private val adapter by lazy { LocationDetailsAdapter(@FragmentLocationDetailsBinding ::handleThumbnailClick) }
     private val safeArgs: LocationDetailsFragmentArgs by navArgs()
+    private val residents: MutableList<Character> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,24 +37,38 @@ class LocationDetailsFragment : Fragment() {
     }
 
     private fun initViews() = with(binding) {
-        lifecycleScope.launch {
-            viewModel.setLocation(safeArgs.locationId.toInt())
-            viewModel.location.collectLatest { location ->
-                when (location) {
-                    is Resource.Error -> {
-                        Toast.makeText(context, "Error: Unable to Fetch Data", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    Resource.Loading -> {}
-                    is Resource.Success -> {
-                        tvLocName.text = location.data.name
-                        tvLocType.text = location.data.type
-                        tvLocDimension.text = location.data.dimension
-                        rvResidents.adapter = adapter.apply { addItems(location.data.residents) }
-                    }
+        viewModel.setLocation(safeArgs.locationId.toInt())
+        collectLatestLifecycleFlow(viewModel.location) { location ->
+            when (location) {
+                is Resource.Error -> {
+                    Toast.makeText(context, "Error: Unable to Fetch Data", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                Resource.Loading -> {}
+                is Resource.Success -> {
+                    tvLocName.text = location.data.name
+                    tvLocType.text = location.data.type
+                    tvLocDimension.text = location.data.dimension
+                    setResidents(location.data.residents)
                 }
             }
         }
+
+        collectLatestLifecycleFlow(viewModel.resident) { resident ->
+            rvResidents.adapter = adapter
+            when(resident) {
+                is Resource.Error -> {}
+                Resource.Loading -> {}
+                is Resource.Success -> {
+                    residents.add(resident.data)
+                    adapter.addResidents(residents)
+                }
+            }
+        }
+    }
+
+    private fun setResidents(residentUrls: List<String>) {
+        for(url in residentUrls) viewModel.setResident(GET_ID_BY_URL(url).toInt())
     }
 
     private fun handleThumbnailClick(charUrl: String) {

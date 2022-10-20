@@ -6,13 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.rave.rickandmortyv2.databinding.ThumbnailDashboardBinding
 import com.example.lib_data.domain.models.Character
+import com.example.lib_data.domain.util.Constants.GET_ID_BY_URL
 
 class DashboardAdapter(
-    private val handleThumbnailClick: (id: String) -> Unit,
-    private val getOriginName: (url: String) -> String
+    private val handleThumbnailClick: (id: String) -> Unit
 ) : RecyclerView.Adapter<DashboardAdapter.ThumbnailViewHolder>() {
     private var characters: MutableList<Character> = mutableListOf()
-    private var origin = ""
 
     inner class ThumbnailViewHolder(
         private val binding: ThumbnailDashboardBinding
@@ -23,7 +22,6 @@ class DashboardAdapter(
             tvThumbnailSpecies.text = char.species
             ivThumbnail.load(char.image)
             tvLocation.text = char.location.name
-            tvFirstEpisode.text = "First Seen In"
 
             root.setOnClickListener { handleThumbnailClick(char.id.toString()) }
         }
@@ -37,6 +35,7 @@ class DashboardAdapter(
 
     override fun onBindViewHolder(holder: ThumbnailViewHolder, position: Int) {
         holder.applyItem(characters[position])
+
     }
 
     override fun getItemCount() = characters.size
@@ -45,7 +44,4 @@ class DashboardAdapter(
         characters = chars as MutableList
     }
 
-    fun setOrigin(ori: String) {
-        origin = ori
-    }
 }

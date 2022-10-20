@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.navigation.findNavController
 import com.rave.rickandmortyv2.databinding.ActivityMainBinding
 import com.rave.rickandmortyv2.databinding.SplashScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,5 +20,7 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             setContentView(mainBinding.root)
         }, 3000L)
+
     }
+
 }

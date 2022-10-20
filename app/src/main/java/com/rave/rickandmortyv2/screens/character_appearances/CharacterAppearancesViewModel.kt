@@ -18,8 +18,14 @@ class CharacterAppearancesViewModel @Inject constructor(
 ): ViewModel() {
     private val _episode: MutableStateFlow<Resource<Episode>> = MutableStateFlow(Resource.Loading)
     val episode = _episode.asStateFlow()
+    private val _character: MutableStateFlow<Resource<Character>> = MutableStateFlow(Resource.Loading)
+    val character = _character.asStateFlow()
 
     fun setEpisode(id: Int) = viewModelScope.launch {
         _episode.value = repo.getEpisodeById(id)
+    }
+
+    fun setCharacter(id: Int) = viewModelScope.launch {
+        _character.value = repo.getCharacterById(id)
     }
 }

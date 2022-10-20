@@ -3,21 +3,24 @@ package com.rave.rickandmortyv2.screens.location_details
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.rave.rickandmortyv2.databinding.ThumbnailCharacterBinding
-import com.rave.rickandmortyv2.databinding.ThumbnailEpisodeBinding
-import com.rave.rickandmortyv2.screens.episodes_list.EpisodeListAdapter
+import com.example.lib_data.domain.models.Character
 
 class LocationDetailsAdapter(
     private val handleThumbnailClick: (charUrl: String) -> Unit
 ) : RecyclerView.Adapter<LocationDetailsAdapter.ThumbnailViewHolder>() {
-    private var residents: MutableList<String> = mutableListOf()
+    private var residents: MutableList<Character> = mutableListOf()
 
     inner class ThumbnailViewHolder(
         private val binding: ThumbnailCharacterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun applyItem(residentUrl: String) = with(binding) {
-            tvCharName.text = residentUrl
-            root.setOnClickListener { handleThumbnailClick(residentUrl) }
+        fun applyItem(resident: Character) = with(binding) {
+            tvCharName.text = resident.name
+            tvCharStatus.text = resident.status
+            tvCharSpecies.text = resident.species
+            ivCharImg.load(resident.image)
+            root.setOnClickListener { handleThumbnailClick(resident.id.toString()) }
         }
     }
 
@@ -33,7 +36,7 @@ class LocationDetailsAdapter(
 
     override fun getItemCount() = residents.size
 
-    fun addItems(urls: List<String>) {
-        residents = urls as MutableList
+    fun addResidents(res: MutableList<Character>) {
+        residents = res
     }
 }

@@ -9,6 +9,7 @@ import com.example.lib_data.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,8 +20,6 @@ class DashboardViewModel @Inject constructor(
     private val _chars: MutableStateFlow<Resource<CharacterListWrapper>> =
         MutableStateFlow(Resource.Loading)
     val chars = _chars.asStateFlow()
-    private val _origin: MutableStateFlow<String> = MutableStateFlow("")
-    val origin = _origin.asStateFlow()
 
     init {
         getCharacters()
@@ -28,33 +27,6 @@ class DashboardViewModel @Inject constructor(
 
     private fun getCharacters() = viewModelScope.launch {
         _chars.value = repo.getCharacters()
-    }
-
-    private fun setOrigin(origin: String) {
-        firstSeen = origin
-    }
-
-//    fun getEpisodeById(episodeId: String): Resource<Episode> {
-//        viewModelScope.launch { repo.getEpisodeById(episodeId.toInt()) }
-//    }
-
-    fun getOriginName(episodeId: String): String {
-        var name = "error"
-//        viewModelScope.launch {
-//            when(val episode = repo.getEpisodeById(episodeId.toInt())) {
-//                is Resource.Error -> {println("Error")}
-//                Resource.Loading -> {println("Loading")}
-//                is Resource.Success -> {
-//                    name = episode.data.name
-//                    println(name)
-//                }
-//            }
-//        }
-        return name
-    }
-
-    companion object  {
-        var firstSeen = ""
     }
 
 }

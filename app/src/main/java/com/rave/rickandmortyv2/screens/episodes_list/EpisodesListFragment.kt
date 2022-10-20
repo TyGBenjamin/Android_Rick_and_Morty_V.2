@@ -6,24 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.example.lib_data.domain.models.Episode
 import com.example.lib_data.domain.util.Constants.GET_ID_BY_URL
 import com.example.lib_data.domain.util.Resource
+import com.example.lib_data.domain.util.collectLatestLifecycleFlow
 import com.rave.rickandmortyv2.databinding.FragmentEpisodesListBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EpisodesListFragment : Fragment() {
     private var _binding: FragmentEpisodesListBinding? = null
     private val binding: FragmentEpisodesListBinding get() = _binding!!
     private val viewModel by viewModels<EpisodesListViewModel>()
-    private val adapter by lazy { EpisodeListAdapter(@FragmentEpisodesListBinding::handleThumbnailClick) }
+    private val adapter by lazy { EpisodeListAdapter(@FragmentEpisodesListBinding ::handleThumbnailClick) }
     private val safeArgs: EpisodesListFragmentArgs by navArgs()
+    private val episodes: MutableList<Episode> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,20 +38,33 @@ class EpisodesListFragment : Fragment() {
     }
 
     private fun initViews() = with(binding) {
-        lifecycleScope.launch {
-            viewModel.setCharacter(safeArgs.charId.toInt())
-            viewModel.char.collectLatest { character ->
-                when (character) {
-                    is Resource.Error -> {}
-                    Resource.Loading -> {}
-                    is Resource.Success -> {
-                        ivCharImg.load(character.data.image)
-                        tvCharName.text = "${character.data.name}'s Episodes"
-                        rvEpisodes.adapter = adapter.apply { addItems(character.data.episode) }
-                    }
+        viewModel.setCharacter(safeArgs.charId.toInt())
+        collectLatestLifecycleFlow(viewModel.char) { character ->
+            when (character) {
+                is Resource.Error -> {}
+                Resource.Loading -> {}
+                is Resource.Success -> {
+                    ivCharImg.load(character.data.image)
+                    tvCharName.text = "${character.data.name}'s Episodes"
+                    setEpisodes(character.data.episode)
                 }
             }
         }
+        collectLatestLifecycleFlow(viewModel.episode) { episode ->
+            rvEpisodes.adapter = adapter
+            when(episode) {
+                is Resource.Error -> {}
+                Resource.Loading -> {}
+                is Resource.Success -> {
+                    episodes.add(episode.data)
+                    adapter.addEpisodes(episodes)
+                }
+            }
+        }
+    }
+
+    private fun setEpisodes(episodesUrl: List<String>) {
+        for (url in episodesUrl) viewModel.setEpisode(GET_ID_BY_URL(url).toInt())
     }
 
     private fun handleThumbnailClick(episodeUrl: String) {

@@ -41,7 +41,6 @@
             android:id="@+id/tv_epi_episode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/episodes"
             android:textColor="@color/cream" />
     </LinearLayout>

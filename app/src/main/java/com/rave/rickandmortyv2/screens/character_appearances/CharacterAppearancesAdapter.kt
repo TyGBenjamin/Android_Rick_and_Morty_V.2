@@ -2,20 +2,25 @@ package com.rave.rickandmortyv2.screens.character_appearances
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.example.lib_data.domain.models.Character
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.rave.rickandmortyv2.databinding.ThumbnailCharacterBinding
 
 class CharacterAppearancesAdapter(
     private val handleThumbnailClick: (charUrl: String) -> Unit
 ) : RecyclerView.Adapter<CharacterAppearancesAdapter.ThumbnailViewHolder>() {
-    private var characters: MutableList<String> = mutableListOf()
+    private var characters: MutableList<Character> = mutableListOf()
 
     inner class ThumbnailViewHolder(
         private val binding: ThumbnailCharacterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun applyItem(charUrl: String) = with(binding) {
-            tvCharName.text = charUrl
-            root.setOnClickListener { handleThumbnailClick(charUrl) }
+        fun applyItem(char: Character) = with(binding) {
+            tvCharName.text = char.name
+            ivCharImg.load(char.image)
+            tvCharSpecies.text = char.species
+            tvCharStatus.text = char.status
+            root.setOnClickListener { handleThumbnailClick(char.id.toString()) }
         }
     }
 
@@ -31,7 +36,7 @@ class CharacterAppearancesAdapter(
 
     override fun getItemCount() = characters.size
 
-    fun addItems(urls: List<String>) {
-        characters = urls as MutableList
+    fun addCharacters(chars: MutableList<Character>) {
+        characters = chars
     }
 }

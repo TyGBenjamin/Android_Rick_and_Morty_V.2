@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.lib_data.domain.util.Constants.GET_ID_BY_URL
 import com.example.lib_data.domain.util.Resource
+import com.example.lib_data.domain.util.collectLatestLifecycleFlow
 import com.rave.rickandmortyv2.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -23,8 +24,7 @@ class DashboardFragment : Fragment() {
     private val viewModel by viewModels<DashboardViewModel>()
     private val adapter by lazy {
         DashboardAdapter(
-            @DashboardFragment ::handleThumbnailClick,
-            @DashboardFragment ::getOriginName
+            @DashboardFragment ::handleThumbnailClick
         )
     }
 
@@ -41,34 +41,21 @@ class DashboardFragment : Fragment() {
     }
 
     private fun initViews() = with(binding) {
-        lifecycleScope.launch {
-            viewModel.chars.collectLatest { charList ->
-                when (charList) {
-                    is Resource.Error -> {}
-                    Resource.Loading -> {
-                        Toast.makeText(context, "Fetching Data...", Toast.LENGTH_SHORT).show()
-                    }
-                    is Resource.Success -> {
-
-                        rvList.adapter = adapter.apply { setCharacters(charList.data.results) }
-                    }
+        collectLatestLifecycleFlow(viewModel.chars) { charList ->
+            when (charList) {
+                is Resource.Error -> {}
+                Resource.Loading -> {
+                    Toast.makeText(context, "Fetching Data...", Toast.LENGTH_SHORT).show()
                 }
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.origin.collectLatest { origin ->
-                rvList.adapter = adapter.apply { setOrigin(origin) }
+                is Resource.Success -> {
+                    rvList.adapter = adapter.apply { setCharacters(charList.data.results) }
+                }
             }
         }
     }
 
     private fun handleThumbnailClick(id: String) {
         navigateToCharDetails(id)
-    }
-
-    private fun getOriginName(url: String): String {
-        return viewModel.getOriginName(GET_ID_BY_URL(url))
     }
 
     private fun navigateToCharDetails(charId: String) {

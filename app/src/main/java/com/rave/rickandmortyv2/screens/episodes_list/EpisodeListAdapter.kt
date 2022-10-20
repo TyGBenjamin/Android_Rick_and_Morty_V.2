@@ -3,19 +3,22 @@ package com.rave.rickandmortyv2.screens.episodes_list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lib_data.domain.models.Episode
 import com.rave.rickandmortyv2.databinding.ThumbnailEpisodeBinding
 
 class EpisodeListAdapter(
     private val handleThumbnailClick: (episodeUrl: String) -> Unit
 ) : RecyclerView.Adapter<EpisodeListAdapter.ThumbnailViewHolder>() {
-    private var episodes: MutableList<String> = mutableListOf()
+    private var episodes: MutableList<Episode> = mutableListOf()
 
     inner class ThumbnailViewHolder(
         private val binding: ThumbnailEpisodeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun applyItem(episodeUrl: String) = with(binding) {
-            tvEpiName.text = episodeUrl
-            root.setOnClickListener { handleThumbnailClick(episodeUrl) }
+        fun applyItem(episode: Episode) = with(binding) {
+            tvEpiName.text = episode.name
+            tvEpiAirDate.text = episode.date
+            tvEpiEpisode.text = episode.episode
+            root.setOnClickListener { handleThumbnailClick(episode.id.toString()) }
         }
     }
 
@@ -31,7 +34,7 @@ class EpisodeListAdapter(
 
     override fun getItemCount() = episodes.size
 
-    fun addItems(urls: List<String>) {
-        episodes = urls as MutableList
+    fun addEpisodes(epis: MutableList<Episode>) {
+        episodes = epis
     }
 }
