@@ -18,4 +18,6 @@ interface ApiService {
 
     @GET("/api/episode/{id}")
     suspend fun getEpisodeById(@Path("id") id: Int): Response<EpisodeDetails>
+
+
 }

@@ -33,9 +33,10 @@ class TypeConvertersHelper {
 
     @TypeConverter
     fun stringToLocation(value: String): Location {
-        val name = value.substringBefore(':')
+        val after = value.substringAfter('=')
+        val before = after.substringBefore(',')
+        var name = before
         val url = value.substringAfter(':')
-
         return Location(name, url)
     }
 

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.alecbrando.musicplayer.utils.collectLatestLifecycleFlow
-import com.lib_data.resources.Resource
 import com.rave.rickandmortyv2.databinding.FragmentDashboardBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +18,6 @@ class DashboardFragment: Fragment(){
     private val binding: FragmentDashboardBinding get() = _binding!!
     private val viewModel by viewModels<DashboardViewModel>()
     private val dashboardAdapter by lazy { DashboardAdapter(::navigateToCharacterDetails, ::getFirstSeenIn) }
-//    private val characterInfo by lazy { CharacterInfo() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,26 +39,14 @@ class DashboardFragment: Fragment(){
                 dashboardAdapter.submitData(characters)
             }
         }
-        collectLatestLifecycleFlow(viewModel.firstSeenIn){ episode ->
-            when (episode) {
-                is Resource.Idle -> {}
-                is Resource.Error -> {}
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    val seen = episode.data.name
-//                    episode.data.characters[0]
-
-                }
-                else -> {}
-            }
-        }
     }
 
     private fun navigateToCharacterDetails(id: Int){
         findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToCharacterDetailsFragment(id))
     }
 
-    private fun getFirstSeenIn(id: Int)  {
-//        return viewModel.getEpisodeById(id)
+    private fun getFirstSeenIn(id: Int): String {
+        return viewModel.getEpisodeById(id)
     }
+
 }

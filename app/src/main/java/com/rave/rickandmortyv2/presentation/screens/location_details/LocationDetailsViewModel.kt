@@ -19,7 +19,6 @@ import javax.inject.Inject
 class LocationDetailsViewModel @Inject constructor(
     private val getLocationDetailsByIdUseCase: GetLocationDetailsByIdUseCase,
     private val getCharacterByIdUseCase: GetCharacterByIdUseCase,
-    private val getAllCharactersUseCase: GetAllCharactersUseCase
 ): ViewModel() {
     private var _locationDetails : MutableStateFlow<Resource<LocationDetails>> = MutableStateFlow(Resource.Idle)
     val locationDetails = _locationDetails.asStateFlow()
@@ -33,11 +32,6 @@ class LocationDetailsViewModel @Inject constructor(
     fun getCharacterById(id: Int) = viewModelScope.launch {
         _characterList.value = getCharacterByIdUseCase.invoke(id)
     }
-
-    fun getAllCharacters() = viewModelScope.launch {
-//        _characterList.value = getAllCharactersUseCase()
-    }
-
 
 
 

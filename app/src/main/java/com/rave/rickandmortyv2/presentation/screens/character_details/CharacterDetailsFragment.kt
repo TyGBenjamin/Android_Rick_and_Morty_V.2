@@ -1,8 +1,6 @@
 package com.rave.rickandmortyv2.presentation.screens.character_details
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.paging.RemoteMediator
 import coil.load
 import com.alecbrando.musicplayer.utils.collectLatestLifecycleFlow
 import com.lib_data.domain.models.CharacterDetails
@@ -79,12 +76,25 @@ class CharacterDetailsFragment: Fragment() {
         btnBack.setOnClickListener {
             navigateToDashboard()
         }
+        llEpisode.setOnClickListener{
+            navigateToCharacterEpisodeList(args.id)
+        }
     }
 
     private fun navigateToLocationDetails(id: Int){
-        findNavController().navigate(CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToLocationDetailsFragment(id))
+        findNavController().navigate(
+            CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToLocationDetailsFragment(id)
+        )
     }
     private fun navigateToDashboard(){
-        findNavController().navigate(CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToDashboardFragment())
+        findNavController().navigate(
+            CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToDashboardFragment()
+        )
+    }
+
+    private fun navigateToCharacterEpisodeList(id: Int) {
+        findNavController().navigate(
+            CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToCharacterEpisodesFragment(id)
+        )
     }
 }

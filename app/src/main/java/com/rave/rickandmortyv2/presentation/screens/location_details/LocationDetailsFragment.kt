@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.alecbrando.musicplayer.utils.collectLatestLifecycleFlow
 import com.lib_data.domain.models.CharacterDetails
 import com.lib_data.domain.models.LocationDetails
 import com.lib_data.resources.Resource
 import com.rave.rickandmortyv2.databinding.FragmentLocationDetailsBinding
+import com.rave.rickandmortyv2.presentation.screens.character_details.CharacterDetailsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,9 +24,8 @@ class LocationDetailsFragment: Fragment() {
     private var _binding: FragmentLocationDetailsBinding? = null
     val binding : FragmentLocationDetailsBinding get() = _binding!!
     private val viewModel by viewModels<LocationDetailsViewModel>()
-    private val locationDetailsAdapter by lazy { LocationDetailsAdapter() }
+    private val locationDetailsAdapter by lazy { LocationDetailsAdapter(::navigateToCharacterDetails) }
     private val args by navArgs<LocationDetailsFragmentArgs>()
-    private var residentList: List<String> = emptyList()
     private var characterList: MutableList<CharacterDetails> = mutableListOf()
 
     override fun onCreateView(
@@ -38,8 +39,8 @@ class LocationDetailsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        initLocationDetails()
         initListeners()
+        initGetLocationDetailsIdFromArgs()
     }
 
     private fun initViews() = with(binding){
@@ -55,11 +56,7 @@ class LocationDetailsFragment: Fragment() {
                     tvLocationType.text = type
                     val dimension = "Dimension: ${details.data.dimension}"
                     tvLocationDimension.text = dimension
-//                    getResidentId(details.data.residents)
-                    setResidentList(details.data.residents)
-//                    residentList = details.data.residents
-
-
+                    getResidentById(details.data.residents)
                 }
             }
         }
@@ -77,21 +74,19 @@ class LocationDetailsFragment: Fragment() {
                 }
             }
         }
-
     }
 
-    private fun initLocationDetails() {
+    private fun initListeners() = with(binding){
+        binding.btnBack.setOnClickListener {
+            navigateToDashboard()
+        }
+    }
+
+    private fun initGetLocationDetailsIdFromArgs() {
         viewModel.getLocationDetailsById(args.id)
     }
 
-    private fun setResidentList(details: List<String>){
-        residentList = details
-        for(i in residentList){
-            Log.d(TAG, "initViews: resident list $i")
-        }
-    }
-    
-    private fun getResidentId(details: List<String>){
+    private fun getResidentById(details: List<String>){
         for(i in details.indices){
             var url = details[i].subSequence(42, details[i].lastIndex+1) as String
             var id = url.toInt()
@@ -99,8 +94,15 @@ class LocationDetailsFragment: Fragment() {
         }
     }
 
-    private fun initListeners() {
-
+    private fun navigateToCharacterDetails(id: Int){
+        findNavController().navigate(
+            LocationDetailsFragmentDirections.actionLocationDetailsFragmentToCharacterDetailsFragment(id)
+        )
     }
 
+    private fun navigateToDashboard(){
+        findNavController().navigate(
+            LocationDetailsFragmentDirections.actionLocationDetailsFragmentToDashboardFragment()
+        )
+    }
 }

@@ -36,7 +36,7 @@ class AppModule {
     fun providesDatabase(@ApplicationContext applicationContext: Context): CharacterDatabase = Room.databaseBuilder(
         applicationContext,
         CharacterDatabase::class.java, "character-database"
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides

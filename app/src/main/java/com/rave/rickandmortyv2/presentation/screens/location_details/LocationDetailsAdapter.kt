@@ -1,25 +1,33 @@
 package com.rave.rickandmortyv2.presentation.screens.location_details
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.lib_data.domain.models.CharacterDetails
 import com.lib_data.domain.models.LocationDetails
 import com.rave.rickandmortyv2.databinding.LocationDetailsBinding
 
-class LocationDetailsAdapter: RecyclerView.Adapter<LocationDetailsAdapter.LocationDetailsViewHolder>() {
-    private var characterDetailsList : MutableList<CharacterDetails> = mutableListOf()
-    private var li : MutableList<String> = mutableListOf("Boo", "Hoo", "Lala")
+class LocationDetailsAdapter(
+    private val navigateToCharacterDetails: (id: Int) -> Unit
+): RecyclerView.Adapter<LocationDetailsAdapter.LocationDetailsViewHolder>() {
+    private var characterDetailsList : List<CharacterDetails> = mutableListOf()
 
     inner class LocationDetailsViewHolder(
         private val binding: LocationDetailsBinding
     ): RecyclerView.ViewHolder(binding.root){
         fun displayLocationDetails(details: CharacterDetails) = with(binding){
-            Log.d(TAG, "displayLocationDetails: Location Name: ${details.name}")
-//            tvLocationName.text = details.name
-            tvName.text = li[1]
+            ivImage.load(details.image)
+            tvName.text = details.name
+            val statusGender = "${details.status} - ${details.gender}"
+            tvStatusGender.text = statusGender
+
+            llResidentDetails.setOnClickListener{
+                navigateToCharacterDetails(details.id)
+            }
         }
     }
 
@@ -34,16 +42,15 @@ class LocationDetailsAdapter: RecyclerView.Adapter<LocationDetailsAdapter.Locati
     }
 
     override fun getItemCount(): Int {
-
         return characterDetailsList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addLocationDetails(details: List<CharacterDetails>){
-        characterDetailsList = if (characterDetailsList.isEmpty()) {
-            mutableListOf()
+        if (details.size == 0) {
+            this.characterDetailsList = mutableListOf<CharacterDetails>()
         } else {
-            Log.d(TAG, "addLocationDetails: $details")
-            details as MutableList<CharacterDetails>
+            this.characterDetailsList = details as MutableList<CharacterDetails>
         }
         notifyDataSetChanged()
     }

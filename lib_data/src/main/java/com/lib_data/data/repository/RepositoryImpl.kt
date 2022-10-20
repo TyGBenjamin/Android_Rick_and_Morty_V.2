@@ -8,7 +8,6 @@ import com.lib_data.data.local.CharacterDatabase
 import com.lib_data.data.paging.CharacterDetailsRemoteMediator
 import com.lib_data.data.remote.ApiService
 import com.lib_data.domain.models.CharacterDetails
-import com.lib_data.domain.models.EpisodeCharactersInfo
 import com.lib_data.domain.models.EpisodeDetails
 import com.lib_data.domain.models.LocationDetails
 import com.lib_data.domain.repository.Repository

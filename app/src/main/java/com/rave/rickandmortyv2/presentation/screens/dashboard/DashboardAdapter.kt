@@ -11,7 +11,7 @@ import com.rave.rickandmortyv2.databinding.DashboardBinding
 
 class DashboardAdapter(
     private val navigateToCharacterDetails: (id: Int) -> Unit,
-    private val getFirstSeenIn: (id: Int) -> Unit,
+    private val getFirstSeenIn: (id: Int) -> String
 ): PagingDataAdapter<CharacterDetails, DashboardAdapter.DashboardViewHolder>(COMPARATOR) {
 
     inner class DashboardViewHolder(
@@ -25,9 +25,11 @@ class DashboardAdapter(
             tvSpecies.text = character.species
             tvLocation.text = character.location.name
 
-            val id = character.episode[0].substringAfter("n/").toInt()
-            getFirstSeenIn(id)
-//            tvName.text = getItem(adapterPosition)?.name
+            val url = character.episode.sorted()
+            val id = url[0].subSequence(40, url[0].lastIndex+1) as String
+            val stupidId = id.toInt()
+            val firstSeenIn = getFirstSeenIn(stupidId+1)
+            tvFirstSeenIn.text = firstSeenIn
 
             root.setOnClickListener{
                 navigateToCharacterDetails(character.id)
@@ -49,7 +51,6 @@ class DashboardAdapter(
     }
 
     companion object{
-//        val firstSeenIn : String = ""
         private val COMPARATOR = object : DiffUtil.ItemCallback<CharacterDetails>() {
             override fun areItemsTheSame(
                 oldItem: CharacterDetails,
