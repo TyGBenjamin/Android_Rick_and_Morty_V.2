@@ -31,7 +31,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun setOrigin(origin: String) {
-        _origin.value = origin
+        firstSeen = origin
     }
 
 //    fun getEpisodeById(episodeId: String): Resource<Episode> {
@@ -40,15 +40,21 @@ class DashboardViewModel @Inject constructor(
 
     fun getOriginName(episodeId: String): String {
         var name = "error"
-        viewModelScope.launch {
-            when(val episode = repo.getEpisodeById(episodeId.toInt())) {
-                is Resource.Error -> {println("Error")}
-                Resource.Loading -> {println("Loading")}
-                is Resource.Success -> {
-                    episode.data.name
-                }
-            }
-        }
+//        viewModelScope.launch {
+//            when(val episode = repo.getEpisodeById(episodeId.toInt())) {
+//                is Resource.Error -> {println("Error")}
+//                Resource.Loading -> {println("Loading")}
+//                is Resource.Success -> {
+//                    name = episode.data.name
+//                    println(name)
+//                }
+//            }
+//        }
         return name
     }
+
+    companion object  {
+        var firstSeen = ""
+    }
+
 }

@@ -49,6 +49,7 @@ class DashboardFragment : Fragment() {
                         Toast.makeText(context, "Fetching Data...", Toast.LENGTH_SHORT).show()
                     }
                     is Resource.Success -> {
+
                         rvList.adapter = adapter.apply { setCharacters(charList.data.results) }
                     }
                 }

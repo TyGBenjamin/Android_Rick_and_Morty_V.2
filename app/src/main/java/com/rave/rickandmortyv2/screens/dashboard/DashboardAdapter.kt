@@ -23,10 +23,7 @@ class DashboardAdapter(
             tvThumbnailSpecies.text = char.species
             ivThumbnail.load(char.image)
             tvLocation.text = char.location.name
-
-            if (char.origin.url?.isNotEmpty()!!) {
-                tvFirstEpisode.text = getOriginName(char.origin.url!!)
-            }
+            tvFirstEpisode.text = "First Seen In"
 
             root.setOnClickListener { handleThumbnailClick(char.id.toString()) }
         }
