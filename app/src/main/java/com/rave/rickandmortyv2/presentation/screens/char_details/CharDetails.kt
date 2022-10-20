@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.example.lib_data.utils.Constants.getIdFromUrl
 import com.example.lib_data.utils.Resource
 import com.rave.rickandmortyv2.databinding.FragmentCharDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +36,24 @@ class CharDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
+//    private fun initListeners()= with(binding){
+//        // TODO
+//        lifecycleScope.launch {
+//            viewModel.setChar(safeArgs.id)
+//            viewModel.char.collectLatest { char ->
+//                btnLocation.setOnClickListener {
+//                    if (char.data.location.url != null) {
+//                        navToLocation(getIdFromUrl(char.data.location.url!!).toString())
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    private fun navToLocation(locationId: Int){
+        val action = CharDetailsDirections.actionCharDetailsToLocationDetails(locationId)
+        findNavController().navigate(action)
+    }
 
     private fun initViews() = with(binding) {
         lifecycleScope.launch {
@@ -56,13 +76,33 @@ class CharDetails : Fragment() {
                         tvGender.text = char.data.gender
                         tvSpecies.text = char.data.species
                         tvOrigName.text = char.data.origin.name
-                        tvEpisode2.text = char.data.episode.size.toString()
+                        btnEpisode.text = char.data.episode.size.toString()
+
+
+                        btnLocation.setOnClickListener{
+                            println("Location Button Clicked")
+                            if(char.data.location.url != null){
+                                navToLocation(getIdFromUrl(char.data.location.url!!))
+                            }
+                        }
+                        btnOrigin.setOnClickListener{
+                            println("Location Button Clicked")
+                            if(char.data.location.url != null){
+                                navToLocation(getIdFromUrl(char.data.origin.url!!))
+                            }
+                        }
+
+                        btnEpisode.setOnClickListener{
+                            println("Episode Button Clicked")
+                            //TODO
+                        }
 
                     }
                     null -> Log.d(TAG, "THERES SOME NULLS HERE")
                 }
             }
         }
+
     }
 
     companion object {

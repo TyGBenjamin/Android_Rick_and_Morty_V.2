@@ -5,6 +5,7 @@ import com.example.lib_data.data.remote.ApiService
 import com.example.lib_data.domain.models.CharWrapper
 import com.example.lib_data.domain.models.Data
 import com.example.lib_data.domain.models.Episode
+import com.example.lib_data.domain.models.LocationDetails
 import com.example.lib_data.domain.repository.Repository
 import com.example.lib_data.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +55,7 @@ class RepositoryImpl @Inject constructor(private var apiInstance: ApiService) : 
             }
         }
 
-    override suspend fun getLocationById(id: Int): Resource<Location> =
+    override suspend fun getLocationById(id: Int): Resource<LocationDetails> =
         withContext(Dispatchers.IO) {
             return@withContext try {
                 val res = apiInstance.getLocationById(id)

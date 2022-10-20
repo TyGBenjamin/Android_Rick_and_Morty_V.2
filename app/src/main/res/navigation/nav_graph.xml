@@ -39,7 +39,7 @@
             app:destination="@id/charDetails" />
         <argument
             android:name="locationId"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/characterEpisodeList"
