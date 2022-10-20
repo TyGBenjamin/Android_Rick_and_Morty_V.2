@@ -1,6 +1,8 @@
 package com.rave.rickandmortyv2.presentation.screens.character_episodes
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.alecbrando.musicplayer.utils.collectLatestLifecycleFlow
+import com.lib_data.domain.models.EpisodeDetails
 import com.lib_data.resources.Resource
-import com.rave.rickandmortyv2.databinding.FragmentCharacterDetailsBinding
 import com.rave.rickandmortyv2.databinding.FragmentCharacterEpisodesBinding
-import com.rave.rickandmortyv2.presentation.screens.character_details.CharacterDetailsFragmentArgs
-import com.rave.rickandmortyv2.presentation.screens.character_details.CharacterDetailsViewModel
-import com.rave.rickandmortyv2.presentation.screens.location_details.LocationDetailsFragmentArgs
-import com.rave.rickandmortyv2.presentation.screens.location_details.LocationDetailsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,6 +49,7 @@ class CharacterEpisodesFragment: Fragment() {
                     ivImage.load(character.data.image)
                     val name = "${character.data.name}'s Episodes"
                     tvName.text = name
+                    getEpisodeDetailsById(character.data.episode)
                 }
             }
         }
@@ -60,7 +59,6 @@ class CharacterEpisodesFragment: Fragment() {
                 is Resource.Error -> {}
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-
 
                 }
             }
@@ -81,5 +79,12 @@ class CharacterEpisodesFragment: Fragment() {
     private fun navigateToDashboard() {
         findNavController().navigate(
             CharacterEpisodesFragmentDirections.actionCharacterEpisodesFragmentToDashboardFragment())
+    }
+
+    private fun getEpisodeDetailsById(details: List<String>){
+        for(i in details.indices){
+            var id = details[i].substringAfterLast('/').toInt()
+            viewModel.getEpisodesById(id)
+        }
     }
 }

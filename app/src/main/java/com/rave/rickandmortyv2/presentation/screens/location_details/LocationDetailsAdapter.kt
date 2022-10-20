@@ -14,7 +14,7 @@ import com.rave.rickandmortyv2.databinding.LocationDetailsBinding
 class LocationDetailsAdapter(
     private val navigateToCharacterDetails: (id: Int) -> Unit
 ): RecyclerView.Adapter<LocationDetailsAdapter.LocationDetailsViewHolder>() {
-    private var characterDetailsList : List<CharacterDetails> = mutableListOf()
+    private var characterDetailsList : MutableList<CharacterDetails> = mutableListOf()
 
     inner class LocationDetailsViewHolder(
         private val binding: LocationDetailsBinding
@@ -46,12 +46,9 @@ class LocationDetailsAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addLocationDetails(details: List<CharacterDetails>){
-        if (details.size == 0) {
-            this.characterDetailsList = mutableListOf<CharacterDetails>()
-        } else {
-            this.characterDetailsList = details as MutableList<CharacterDetails>
-        }
+    fun addLocationDetails(details: CharacterDetails){
+//
+        characterDetailsList.add(details)
         notifyDataSetChanged()
     }
 }

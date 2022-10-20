@@ -6,6 +6,7 @@ import com.lib_data.domain.models.CharacterDetails
 import com.lib_data.domain.models.EpisodeDetails
 import com.lib_data.domain.models.EpisodeWrapper
 import com.lib_data.domain.use_cases.GetCharacterByIdUseCase
+import com.lib_data.domain.use_cases.GetEpisodeByIdUseCase
 import com.lib_data.resources.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterEpisodesViewModel @Inject constructor(
-    private val getCharacterByIdUseCase: GetCharacterByIdUseCase
+    private val getCharacterByIdUseCase: GetCharacterByIdUseCase,
+    private val getEpisodeByIdUseCase: GetEpisodeByIdUseCase,
 ): ViewModel() {
     private var _characterDetails : MutableStateFlow<Resource<CharacterDetails>> = MutableStateFlow(Resource.Idle)
     val characterDetails = _characterDetails.asStateFlow()
@@ -28,9 +30,9 @@ class CharacterEpisodesViewModel @Inject constructor(
         }
     }
 
-    fun getAllEpisodesById(id: Int){
+    fun getEpisodesById(id: Int){
         viewModelScope.launch {
-
+            _episodeList.value = getEpisodeByIdUseCase.invoke(id)
         }
     }
 }

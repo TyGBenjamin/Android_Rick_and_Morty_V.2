@@ -11,7 +11,8 @@ import com.rave.rickandmortyv2.databinding.DashboardBinding
 
 class DashboardAdapter(
     private val navigateToCharacterDetails: (id: Int) -> Unit,
-    private val getFirstSeenIn: (id: Int) -> String
+    private val getFirstSeenIn: (id: Int) -> String,
+    private val numCall: (num: Int) -> Unit
 ): PagingDataAdapter<CharacterDetails, DashboardAdapter.DashboardViewHolder>(COMPARATOR) {
 
     inner class DashboardViewHolder(
@@ -24,13 +25,14 @@ class DashboardAdapter(
             tvStatus.text = status
             tvSpecies.text = character.species
             tvLocation.text = character.location.name
-
             val url = character.episode.sorted()
             val id = url[0].subSequence(40, url[0].lastIndex+1) as String
             val stupidId = id.toInt()
             val firstSeenIn = getFirstSeenIn(stupidId+1)
             tvFirstSeenIn.text = firstSeenIn
-
+            numCall(
+                    absoluteAdapterPosition
+            )
             root.setOnClickListener{
                 navigateToCharacterDetails(character.id)
             }

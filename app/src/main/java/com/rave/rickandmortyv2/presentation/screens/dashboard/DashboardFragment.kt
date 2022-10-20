@@ -17,7 +17,7 @@ class DashboardFragment: Fragment(){
     private var _binding: FragmentDashboardBinding? = null
     private val binding: FragmentDashboardBinding get() = _binding!!
     private val viewModel by viewModels<DashboardViewModel>()
-    private val dashboardAdapter by lazy { DashboardAdapter(::navigateToCharacterDetails, ::getFirstSeenIn) }
+    private val dashboardAdapter by lazy { DashboardAdapter(::navigateToCharacterDetails, ::getFirstSeenIn, ::numCall) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +34,7 @@ class DashboardFragment: Fragment(){
 
     private fun initViews() = with(binding){
         dashboardRecyclerView.adapter = dashboardAdapter
+        dashboardAdapter
         collectLatestLifecycleFlow(viewModel.characterList){ characters ->
             characters?.let{
                 dashboardAdapter.submitData(characters)
@@ -49,4 +50,7 @@ class DashboardFragment: Fragment(){
         return viewModel.getEpisodeById(id)
     }
 
+    fun numCall(num: Int) {
+        println(num)
+    }
 }

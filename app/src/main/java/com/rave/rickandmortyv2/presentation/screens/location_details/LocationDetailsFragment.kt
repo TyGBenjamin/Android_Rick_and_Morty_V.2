@@ -26,7 +26,6 @@ class LocationDetailsFragment: Fragment() {
     private val viewModel by viewModels<LocationDetailsViewModel>()
     private val locationDetailsAdapter by lazy { LocationDetailsAdapter(::navigateToCharacterDetails) }
     private val args by navArgs<LocationDetailsFragmentArgs>()
-    private var characterList: MutableList<CharacterDetails> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,8 +68,7 @@ class LocationDetailsFragment: Fragment() {
                     Log.d(TAG, "initViews: This is the error: ${characters.message}")}
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    characterList.add(characters.data)
-                    locationDetailsAdapter.addLocationDetails(characterList)
+                    locationDetailsAdapter.addLocationDetails(characters.data)
                 }
             }
         }
