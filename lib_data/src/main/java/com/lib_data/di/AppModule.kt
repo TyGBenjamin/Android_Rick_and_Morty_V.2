@@ -9,6 +9,7 @@ import com.lib_data.data.repository.RepositoryImpl
 import com.lib_data.domain.repository.Repository
 import com.lib_data.domain.use_cases.GetAllCharactersUseCase
 import com.lib_data.domain.use_cases.GetCharacterByIdUseCase
+import com.lib_data.domain.use_cases.GetEpisodeByIdUseCase
 import com.lib_data.domain.use_cases.GetLocationDetailsByIdUseCase
 import com.lib_data.utils.objects.BaseUrl.BASE_URL
 import dagger.Module
@@ -52,5 +53,8 @@ class AppModule {
 
     @Provides
     fun providesGetLocationDetailsByIdUseCase(repository: Repository) = GetLocationDetailsByIdUseCase(repository)
+
+    @Provides
+    fun providesGetEpisodeByIdUseCase(repository: Repository) = GetEpisodeByIdUseCase(repository)
 
 }

@@ -22,6 +22,7 @@ class CharacterEpisodesFragment: Fragment() {
     private var _binding : FragmentCharacterEpisodesBinding? = null
     private val binding : FragmentCharacterEpisodesBinding get() = _binding!!
     private val viewModel by viewModels<CharacterEpisodesViewModel>()
+    private val characterEpisodeAdaptor by lazy { CharacterEpisodesAdapter() }
     private val args by navArgs<CharacterEpisodesFragmentArgs>()
 
     override fun onCreateView(
@@ -40,6 +41,7 @@ class CharacterEpisodesFragment: Fragment() {
     }
 
     private fun initViews() = with(binding){
+        characterEpisodesRecyclerView.adapter = characterEpisodeAdaptor
         collectLatestLifecycleFlow(viewModel.characterDetails){ character ->
             when (character) {
                 is Resource.Idle -> {}
@@ -56,10 +58,12 @@ class CharacterEpisodesFragment: Fragment() {
         collectLatestLifecycleFlow(viewModel.episodeList){ episodes ->
             when (episodes) {
                 is Resource.Idle -> {}
-                is Resource.Error -> {}
+                is Resource.Error -> {
+                    Log.d(TAG, "initViews: something is wrong")}
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-
+                    characterEpisodeAdaptor.addAllEpisodes(episodes.data)
+                    Log.d(TAG, "initViews: character episode ${episodes.data.name}")
                 }
             }
         }
@@ -82,8 +86,14 @@ class CharacterEpisodesFragment: Fragment() {
     }
 
     private fun getEpisodeDetailsById(details: List<String>){
+//        for(i in details.indices){
+//            var id = details[i].substringAfterLast('/').toInt()
+//            viewModel.getEpisodesById(id)
+//        }
+
         for(i in details.indices){
-            var id = details[i].substringAfterLast('/').toInt()
+            var url = details[i].subSequence(40, details[i].lastIndex+1) as String
+            var id = url.toInt()
             viewModel.getEpisodesById(id)
         }
     }

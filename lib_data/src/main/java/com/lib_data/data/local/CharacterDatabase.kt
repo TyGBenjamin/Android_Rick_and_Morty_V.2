@@ -7,9 +7,7 @@ import com.lib_data.data.local.typeconverters.TypeConvertersHelper
 import com.lib_data.domain.models.*
 
 @Database(entities = [CharacterDetails::class,
-    CharacterDetailsRemoteKeys::class,
-    LocationDetails::class,
-    EpisodeDetails::class], version = 4)
+    CharacterDetailsRemoteKeys::class], version = 5)
 @TypeConverters(TypeConvertersHelper::class)
 abstract class CharacterDatabase : RoomDatabase(){
     abstract fun characterDao(): CharacterDao
