@@ -1,19 +1,13 @@
 package com.rave.rickandmortyv2.presentation.screens.dashboard
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.lib_data.domain.models.CharacterDetails
-import com.lib_data.domain.models.EpisodeDetails
 import com.lib_data.domain.repository.Repository
 import com.lib_data.domain.use_cases.GetAllCharactersUseCase
-import com.lib_data.domain.use_cases.GetAllEpisodesUseCase
 import com.lib_data.resources.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

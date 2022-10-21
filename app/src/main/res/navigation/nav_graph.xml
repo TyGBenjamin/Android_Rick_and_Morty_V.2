@@ -53,5 +53,19 @@
         <action
             android:id="@+id/action_characterEpisodesFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_characterEpisodesFragment_to_episodeCharacterAppearanceFragment"
+            app:destination="@id/episodeCharacterAppearanceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeCharacterAppearanceFragment"
+        android:name="com.rave.rickandmortyv2.presentation.screens.episode_character_appearance.EpisodeCharacterAppearanceFragment"
+        android:label="EpisodeCharacterAppearanceFragment" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_episodeCharacterAppearanceFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
     </fragment>
 </navigation>

@@ -47,7 +47,6 @@ class LocationDetailsAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun addLocationDetails(details: CharacterDetails){
-//
         characterDetailsList.add(details)
         notifyDataSetChanged()
     }

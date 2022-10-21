@@ -8,7 +8,9 @@ import com.lib_data.domain.models.CharacterDetails
 import com.lib_data.domain.models.EpisodeDetails
 import com.rave.rickandmortyv2.databinding.CharacterEpisodesBinding
 
-class CharacterEpisodesAdapter: RecyclerView.Adapter<CharacterEpisodesAdapter.CharacterEpisodesViewHolder>(){
+class CharacterEpisodesAdapter(
+    private val navigateToEpisodeCharacterAppearance:(id: Int) -> Unit
+): RecyclerView.Adapter<CharacterEpisodesAdapter.CharacterEpisodesViewHolder>(){
     private var episodeDetailsList : MutableList<EpisodeDetails> = mutableListOf()
 
     inner class CharacterEpisodesViewHolder(
@@ -19,6 +21,9 @@ class CharacterEpisodesAdapter: RecyclerView.Adapter<CharacterEpisodesAdapter.Ch
             val airDate = "Air Date: ${episode.airDate}"
             tvAiredDate.text = airDate
             tvEpisodeNumber.text = episode.id.toString()
+            cCharacterEpisode.setOnClickListener{
+                navigateToEpisodeCharacterAppearance(episode.id)
+            }
         }
     }
 

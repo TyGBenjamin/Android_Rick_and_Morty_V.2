@@ -15,6 +15,8 @@ import com.alecbrando.musicplayer.utils.collectLatestLifecycleFlow
 import com.lib_data.domain.models.EpisodeDetails
 import com.lib_data.resources.Resource
 import com.rave.rickandmortyv2.databinding.FragmentCharacterEpisodesBinding
+import com.rave.rickandmortyv2.presentation.screens.dashboard.DashboardFragmentDirections
+import com.rave.rickandmortyv2.presentation.screens.location_details.LocationDetailsFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +24,7 @@ class CharacterEpisodesFragment: Fragment() {
     private var _binding : FragmentCharacterEpisodesBinding? = null
     private val binding : FragmentCharacterEpisodesBinding get() = _binding!!
     private val viewModel by viewModels<CharacterEpisodesViewModel>()
-    private val characterEpisodeAdaptor by lazy { CharacterEpisodesAdapter() }
+    private val characterEpisodeAdaptor by lazy { CharacterEpisodesAdapter(::navigateToEpisodeCharacterAppearance) }
     private val args by navArgs<CharacterEpisodesFragmentArgs>()
 
     override fun onCreateView(
@@ -63,7 +65,6 @@ class CharacterEpisodesFragment: Fragment() {
                 is Resource.Loading -> {}
                 is Resource.Success -> {
                     characterEpisodeAdaptor.addAllEpisodes(episodes.data)
-                    Log.d(TAG, "initViews: character episode ${episodes.data.name}")
                 }
             }
         }
@@ -86,15 +87,15 @@ class CharacterEpisodesFragment: Fragment() {
     }
 
     private fun getEpisodeDetailsById(details: List<String>){
-//        for(i in details.indices){
-//            var id = details[i].substringAfterLast('/').toInt()
-//            viewModel.getEpisodesById(id)
-//        }
-
         for(i in details.indices){
-            var url = details[i].subSequence(40, details[i].lastIndex+1) as String
-            var id = url.toInt()
+            var id = details[i].substringAfterLast('/').toInt()
             viewModel.getEpisodesById(id)
         }
+    }
+
+    private fun navigateToEpisodeCharacterAppearance(id: Int){
+        findNavController().navigate(
+            CharacterEpisodesFragmentDirections.actionCharacterEpisodesFragmentToEpisodeCharacterAppearanceFragment(id)
+        )
     }
 }
