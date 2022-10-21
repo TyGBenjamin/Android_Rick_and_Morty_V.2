@@ -1,5 +1,6 @@
 package com.rave.rickandmortyv2.presentation.screens.episode_character_appearance
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +10,9 @@ import coil.load
 import com.lib_data.domain.models.CharacterDetails
 import com.rave.rickandmortyv2.databinding.EpisodeCharacterAppearanceBinding
 
-class EpisodeCharacterAppearanceAdapter: RecyclerView.Adapter<EpisodeCharacterAppearanceAdapter.EpisodeCharacterAppearanceViewModel>() {
+class EpisodeCharacterAppearanceAdapter(
+    private val navigateToCharacterDetail:(id: Int) -> Unit
+): RecyclerView.Adapter<EpisodeCharacterAppearanceAdapter.EpisodeCharacterAppearanceViewModel>() {
     private var characterList : MutableList<CharacterDetails> = mutableListOf()
 
     inner class EpisodeCharacterAppearanceViewModel(
@@ -21,6 +24,9 @@ class EpisodeCharacterAppearanceAdapter: RecyclerView.Adapter<EpisodeCharacterAp
             val statusGender = "${character.status} - ${character.gender}"
             tvStatusGender.text = statusGender
 
+            llEpisodeCharacterAppearance.setOnClickListener{
+                navigateToCharacterDetail(character.id)
+            }
         }
     }
 
@@ -38,12 +44,12 @@ class EpisodeCharacterAppearanceAdapter: RecyclerView.Adapter<EpisodeCharacterAp
     }
 
     override fun getItemCount(): Int {
-        Log.d(TAG, "getItemCount: ${characterList.size}")
         return characterList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addCharacterDetails(details: CharacterDetails){
-        Log.d(TAG, "addCharacterDetails: adapter details ${details}")
         characterList.add(details)
+        notifyDataSetChanged()
     }
 }

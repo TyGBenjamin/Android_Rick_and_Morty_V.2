@@ -21,7 +21,7 @@ class EpisodeCharacterAppearanceFragment: Fragment() {
     private val binding : FragmentEpisodeCharacterAppearanceBinding get() = _binding!!
     private val viewModel by viewModels<EpisodeCharacterAppearanceViewModel>()
     private val args by navArgs<EpisodeCharacterAppearanceFragmentArgs>()
-    private val episodeCharacterAppearanceAdapter by lazy { EpisodeCharacterAppearanceAdapter() }
+    private val episodeCharacterAppearanceAdapter by lazy { EpisodeCharacterAppearanceAdapter(::navigateToCharacterDetail) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +47,6 @@ class EpisodeCharacterAppearanceFragment: Fragment() {
                     Log.d(TAG, "initViews: fails: Something goes wrong")}
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    Log.d(TAG, "initViews: success: Yeah")
                     tvEpisodeName.text = details.data.name
                     tvEpisodeId.text = details.data.id.toString()
                     val airDate = "Air Date: ${details.data.airDate}"
@@ -62,7 +61,6 @@ class EpisodeCharacterAppearanceFragment: Fragment() {
                 is Resource.Error -> {}
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-//                    Log.d(TAG, "initViews: fragment success ${characterDetails.data}")
                     episodeCharacterAppearanceAdapter.addCharacterDetails(characterDetails.data)
                 }
             }
@@ -77,7 +75,8 @@ class EpisodeCharacterAppearanceFragment: Fragment() {
 
     private fun navigateToDashboard() {
         findNavController().navigate(
-            EpisodeCharacterAppearanceFragmentDirections.actionEpisodeCharacterAppearanceFragmentToDashboardFragment())
+            EpisodeCharacterAppearanceFragmentDirections.actionEpisodeCharacterAppearanceFragmentToDashboardFragment()
+        )
     }
 
     private fun initGetEpisodeById(id: Int){
@@ -89,5 +88,10 @@ class EpisodeCharacterAppearanceFragment: Fragment() {
             val id = details[i].substringAfterLast('/').toInt()
             viewModel.getCharacterById(id)
         }
+    }
+
+    private fun navigateToCharacterDetail(id: Int){
+        findNavController().navigate(
+            EpisodeCharacterAppearanceFragmentDirections.actionEpisodeCharacterAppearanceFragmentToCharacterDetailsFragment(id))
     }
 }

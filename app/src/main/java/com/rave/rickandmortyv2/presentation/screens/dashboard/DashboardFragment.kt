@@ -1,6 +1,8 @@
 package com.rave.rickandmortyv2.presentation.screens.dashboard
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +52,7 @@ class DashboardFragment: Fragment(){
         return viewModel.getEpisodeById(id)
     }
 
-    fun numCall(num: Int) {
-        println(num)
+    private fun numCall(num: Int) {
+        Log.d(TAG, "numCall: the page number $num")
     }
 }
